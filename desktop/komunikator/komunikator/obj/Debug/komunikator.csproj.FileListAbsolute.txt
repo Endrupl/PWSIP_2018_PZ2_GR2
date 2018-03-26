@@ -13,3 +13,5 @@ C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunika
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\komunikator.csproj.GenerateResource.Cache
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\komunikator.exe
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\komunikator.pdb
+C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\Konwersacja.g.cs
+C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\Konwersacja.baml

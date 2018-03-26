@@ -13,38 +13,45 @@ namespace komunikator
         class Konwersacja
         {
             private int wczytaneWiadomosci;
-            private MySqlConnection polaczenie;
+            private string login;
+            private const string daneBazy = "Server=localhost; database=komunikator; UID=root; password=";
 
-            public Konwersacja()
+            public Konwersacja(string login)
             {
-                polaczZBaza();
                 wczytaneWiadomosci = 0;
-            }
-
-            private void polaczZBaza()
-            {
-                polaczenie = new MySqlConnection("Server=localhost; database=komunikator; UID=root; password=");
-                polaczenie.Open();
+                this.login = login;
             }
 
             public string znajdzIdUzytkownika(string login)
             {
-                MySqlCommand zapytanie = polaczenie.CreateCommand();
-                zapytanie.CommandText = "select idUzytkownika from uzytkownicy where login='" + login + "'";
-                MySqlDataReader wynik = zapytanie.ExecuteReader();
-                string id=null;
-                while (wynik.Read())
+                string id = null;
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
                 {
-                    id = wynik["idUzytkownika"].ToString();
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select idUzytkownika from uzytkownicy where login='" + login + "'";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        id = wynik["idUzytkownika"].ToString();
+                    }
+                    wynik.Close();
+                    wynik.Dispose();
+                    zapytanie.Dispose();
                 }
-                wynik.Close();
                 return id;
             }
 
-            public void wyslijWiadomosc(string uzytkownikWysylajacy, string adresat, string tresc)
+            public void wyslijWiadomosc(string tresc, string adresat)
             {
-                MySqlCommand polecenie = polaczenie.CreateCommand();
-                //polecenie.CommandText="insert into wiadomosci"
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "insert into wiadomosci values (null, " + znajdzIdUzytkownika(login) + ", " + znajdzIdUzytkownika(adresat) +
+                        ", '" + tresc + "', now())";
+                    polecenie.ExecuteReader();
+                }
             }
 
             public string[] wczytajWiadomosci(string uzytkownikWysylajacy, string adresat)
@@ -61,5 +68,5 @@ namespace komunikator
             }
         }
     }
-    
+
 }

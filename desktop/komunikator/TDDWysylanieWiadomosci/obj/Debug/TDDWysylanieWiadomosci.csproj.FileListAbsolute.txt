@@ -5,4 +5,3 @@ C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunika
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.pdb
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\MySql.Data.dll
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\MySql.Data.xml
-C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.csprojResolveAssemblyReference.cache
