@@ -30,7 +30,8 @@ namespace komunikator
 
         private void wyslijPrzycisk_Click(object sender, RoutedEventArgs e)
         {
-            //k.wyslijWiadomosc(wiadomoscTekst.Text, "uzytkownik2");//tymczasowe założenie, że konwersacja odbywa się z użytkownikiem uzytkownik2
+            k.wyslijWiadomosc(wiadomoscTekst.Text, "uzytkownik2");//tymczasowe założenie, że konwersacja odbywa się z użytkownikiem uzytkownik2
+            wiadomoscTekst.Text = "";
         }
     }
 }

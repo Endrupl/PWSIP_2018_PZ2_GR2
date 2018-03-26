@@ -8,26 +8,32 @@
         Title="Konwersacja" Height="300" Width="500">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="35"/>
+            <RowDefinition Height="*" MinHeight="191"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="199*"/>
-            <RowDefinition Height="39*"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Column="0" x:Name="wiadomoscTekst" HorizontalAlignment="Left" Height="23" Margin="10,0,0,8" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="402" Grid.Row="2"/>
-        <Button x:Name="wyslijPrzycisk" Content="Wyślij" HorizontalAlignment="Right" Margin="0,0,8,8" VerticalAlignment="Bottom" Width="59" RenderTransformOrigin="0.5,0.5" Click="wyslijPrzycisk_Click" Grid.Row="2" Grid.Column="1" Height="23">
+        <TextBox Grid.Column="0" x:Name="wiadomoscTekst" Margin="10,10,10,6" TextWrapping="Wrap" Grid.Row="2" Height="23" VerticalAlignment="Bottom"/>
+        <Button x:Name="wyslijPrzycisk" Content="Wyślij" HorizontalAlignment="Right" Margin="0,0,8,7" VerticalAlignment="Bottom" Width="59" RenderTransformOrigin="0.558,0.537" Click="wyslijPrzycisk_Click" Grid.Row="2" Grid.Column="1" Height="23">
             <Button.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
                     <RotateTransform Angle="0.268"/>
-                    <TranslateTransform/>
+                    <TranslateTransform X="-0.008" Y="0.015"/>
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="button1" Content="Powrót" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="51" Height="22"/>
-
+        <Button x:Name="button1" Content="Powrót" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="51" Height="22" RenderTransformOrigin="0.288,0.47"/>
+        <ListView x:Name="listView" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
