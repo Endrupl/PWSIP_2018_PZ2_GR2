@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using komunikator.wysylanieWiadomosci;
+using MySql.Data.MySqlClient;
 
 namespace komunikator
 {
@@ -30,8 +31,25 @@ namespace komunikator
 
         private void wyslijPrzycisk_Click(object sender, RoutedEventArgs e)
         {
-            k.wyslijWiadomosc(wiadomoscTekst.Text, "uzytkownik2");//tymczasowe założenie, że konwersacja odbywa się z użytkownikiem uzytkownik2
+            string czasSerwera=null;
+            try
+            {
+                czasSerwera=k.wyslijWiadomosc(wiadomoscTekst.Text, "uzytkownik2");//tymczasowe założenie, że konwersacja odbywa się z użytkownikiem uzytkownik2
+            }
+            catch(MySqlException)
+            {
+                MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            czat.Items.Add(new Konwersacja.Wiadomosc { tresc = wiadomoscTekst.Text, data = czasSerwera, uzytkownik = k.login });
             wiadomoscTekst.Text = "";
+        }
+
+        private void wiadomoscTekst_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                wyslijPrzycisk_Click(sender, e);
+            }
         }
     }
 }

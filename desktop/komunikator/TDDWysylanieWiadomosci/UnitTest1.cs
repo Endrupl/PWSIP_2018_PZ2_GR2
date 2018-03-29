@@ -39,5 +39,23 @@ namespace TDDWysylanieWiadomosci
             polaczenie.Close();
             Assert.AreEqual("TEST", wynikTresc);
         }
+
+        [TestMethod]
+        public void wyslijWiadomoscTest2()
+        {
+            Konwersacja k = new Konwersacja("uzytkownik1");
+            string wynik=k.wyslijWiadomosc("TEST", "uzytkownik2");
+            MySqlConnection polaczenie = new MySqlConnection("Server=localhost; database=komunikator; UID=root; password=");
+            polaczenie.Open();
+            MySqlCommand zapytanie = polaczenie.CreateCommand();
+            zapytanie.CommandText = "select data from wiadomosci where idWysylajacego=1 order by idWiadomosci desc limit 1";
+            string wynikZapytania = null;
+            MySqlDataReader odczytZapytania = zapytanie.ExecuteReader();
+            while (odczytZapytania.Read())
+            {
+                wynikZapytania = odczytZapytania["data"].ToString();
+            }
+            Assert.AreEqual(wynikZapytania, wynik);
+        }
     }
 }

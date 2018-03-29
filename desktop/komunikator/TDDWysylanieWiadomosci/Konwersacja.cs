@@ -13,7 +13,7 @@ namespace komunikator
         class Konwersacja
         {
             private int wczytaneWiadomosci;
-            private string login;
+            public string login;
             private const string daneBazy = "Server=localhost; database=komunikator; UID=root; password=";
 
             public Konwersacja(string login)
@@ -42,16 +42,25 @@ namespace komunikator
                 return id;
             }
 
-            public void wyslijWiadomosc(string tresc, string adresat)
+            public string wyslijWiadomosc(string tresc, string adresat)
             {
+                string czasWiadomosci = null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
                     polecenie.CommandText = "insert into wiadomosci values (null, " + znajdzIdUzytkownika(login) + ", " + znajdzIdUzytkownika(adresat) +
                         ", '" + tresc + "', now())";
-                    polecenie.ExecuteReader();
+                    polecenie.ExecuteReader().Close();
+                    MySqlCommand czasSerwera = polaczenie.CreateCommand();
+                    czasSerwera.CommandText = "select data from wiadomosci where idWysylajacego=" + znajdzIdUzytkownika(login) + " order by idWiadomosci desc limit 1";
+                    MySqlDataReader wynik = czasSerwera.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        czasWiadomosci = wynik["data"].ToString();
+                    }
                 }
+                return czasWiadomosci;
             }
 
             public string[] wczytajWiadomosci(string uzytkownikWysylajacy, string adresat)
@@ -60,11 +69,11 @@ namespace komunikator
                 return null;
             }
 
-            private class Wiadomosc
+            public class Wiadomosc
             {
-                string tresc;
-                DateTime data;
-                TimeSpan godzina;
+                public string tresc { get; set; }
+                public string uzytkownik { get; set; }
+                public string data { get; set; }
             }
         }
     }
