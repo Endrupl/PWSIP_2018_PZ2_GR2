@@ -29,19 +29,33 @@ namespace komunikator
         {
             k = new Konwersacja("uzytkownik1", "uzytkownik2");//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1 i konwersacja odbywa się z użytkownikiem uzytkownik2
             InitializeComponent();
-            List<Konwersacja.Wiadomosc> wiadomosci=k.wczytajWiadomosci();
-            foreach(Konwersacja.Wiadomosc i in wiadomosci)
+            try
             {
-                czat.Items.Add(new Konwersacja.Wiadomosc { tresc = i.tresc, data = i.data, uzytkownik = i.uzytkownik });
+                List<Konwersacja.Wiadomosc> wiadomosci=k.wczytajWiadomosci();
+                foreach(Konwersacja.Wiadomosc i in wiadomosci)
+                {
+                    czat.Items.Add(new Konwersacja.Wiadomosc { tresc = i.tresc, data = i.data, uzytkownik = i.uzytkownik });
+                }
+            }
+            catch(MySqlException)
+            {
+                MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             odswiezacz = new Timer(new TimerCallback(OnOdswiezEvent), k, 1000, 1000);
         }
 
         private void OnOdswiezEvent(object o)
         {
-            if (((Konwersacja)o).sprawdzCzySaNoweWiadomosci())
+            try
             {
-                Dispatcher.Invoke(dodajNoweWiadomosci);
+                if (((Konwersacja)o).sprawdzCzySaNoweWiadomosci())
+                {
+                    Dispatcher.Invoke(dodajNoweWiadomosci);
+                }
+            }
+            catch(MySqlException)
+            {
+                
             }
         }
 
@@ -60,12 +74,13 @@ namespace komunikator
             try
             {
                 czasSerwera=k.wyslijWiadomosc(wiadomoscTekst.Text);
+                czat.Items.Add(new Konwersacja.Wiadomosc { tresc = wiadomoscTekst.Text, data = czasSerwera, uzytkownik = k.login });
             }
             catch(MySqlException)
             {
                 MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            czat.Items.Add(new Konwersacja.Wiadomosc { tresc = wiadomoscTekst.Text, data = czasSerwera, uzytkownik = k.login });
+            
             wiadomoscTekst.Text = "";
         }
 
@@ -75,6 +90,12 @@ namespace komunikator
             {
                 wyslijPrzycisk_Click(sender, e);
             }
+        }
+
+        private void powrot_Click(object sender, RoutedEventArgs e)
+        {
+            WyborRozmowcy oknoPowrot = new WyborRozmowcy();
+            oknoPowrot.Show();
         }
     }
 }

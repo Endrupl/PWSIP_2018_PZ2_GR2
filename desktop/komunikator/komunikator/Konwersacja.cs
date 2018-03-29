@@ -133,7 +133,7 @@ namespace komunikator
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
                     zapytanie.CommandText = "select tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
-                        + znajdzIdUzytkownika(adresat)+" order by idWiadomosci";
+                        + znajdzIdUzytkownika(adresat) + " order by idWiadomosci";
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
                     while(wynik.Read())
                     {
@@ -144,6 +144,11 @@ namespace komunikator
                             tresc = wynik["tresc"].ToString()
                         });
                     }
+                    wynik.Close();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "update wiadomosci set wyswietlona=1 where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+                        + znajdzIdUzytkownika(adresat);
+                    polecenie.ExecuteReader();
                 }
                 return wiadomosci;
             }

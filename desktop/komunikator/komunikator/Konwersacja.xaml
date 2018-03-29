@@ -27,13 +27,13 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
-        <Button x:Name="button1" Content="Powrót" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="51" Height="22" RenderTransformOrigin="0.288,0.47"/>
+        <Button x:Name="powrot" Content="Powrót" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Width="51" Height="22" RenderTransformOrigin="0.288,0.47" Click="powrot_Click"/>
         <ListView x:Name="czat" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Czas" DisplayMemberBinding="{Binding data}"/>
                     <GridViewColumn Header="Użytkownik" DisplayMemberBinding="{Binding uzytkownik}"/>
-                    <GridViewColumn Header="Wiadomość" Width="Auto" DisplayMemberBinding="{Binding tresc}"/>
+                    <GridViewColumn Header="Wiadomość" DisplayMemberBinding="{Binding tresc}"/>
                 </GridView>
             </ListView.View>
         </ListView>

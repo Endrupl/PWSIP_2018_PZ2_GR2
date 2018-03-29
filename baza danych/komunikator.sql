@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 29 Mar 2018, 19:16
+-- Czas generowania: 29 Mar 2018, 21:39
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.3
 
@@ -62,8 +62,6 @@ CREATE TABLE `wiadomosci` (
 --
 
 INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc`, `data`, `wyswietlona`) VALUES
-(1, 1, 1, 'asd', '2018-03-24 00:00:00', 0),
-(2, 1, 1, 'asd', '2018-03-24 00:00:00', 0),
 (3, 1, 2, 'TEST', '2018-03-26 18:14:05', 0),
 (4, 1, 2, 'TEST', '2018-03-26 18:14:28', 0),
 (5, 1, 2, 'TEST', '2018-03-26 18:15:17', 0),
@@ -155,7 +153,20 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 (91, 1, 2, 'test', '2018-03-29 18:59:56', 0),
 (92, 2, 1, 'test test test', '2018-03-29 19:00:25', 1),
 (93, 1, 2, 'test', '2018-03-29 19:14:05', 0),
-(94, 2, 1, 'test test test', '2018-03-29 19:14:24', 0);
+(94, 2, 1, 'test test test', '2018-03-29 19:14:24', 1),
+(95, 1, 2, 'test', '2018-03-29 20:23:37', 0),
+(96, 1, 2, 'wiadomo?? testowa', '2018-03-29 20:24:43', 0),
+(97, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:25:06', 1),
+(98, 1, 2, 'wiadomosc testowa', '2018-03-29 20:26:38', 0),
+(99, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:27:06', 1),
+(100, 1, 2, 'test', '2018-03-29 20:27:53', 0),
+(101, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:28:25', 1),
+(102, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:29:01', 1),
+(103, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:29:35', 1),
+(104, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:30:13', 1),
+(105, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:32:35', 1),
+(106, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:33:27', 1),
+(107, 1, 2, 'test', '2018-03-29 20:33:40', 0);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -187,7 +198,7 @@ ALTER TABLE `uzytkownicy`
 -- AUTO_INCREMENT dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
