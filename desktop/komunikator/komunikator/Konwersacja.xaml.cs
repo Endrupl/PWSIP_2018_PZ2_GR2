@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using komunikator.wysylanieWiadomosci;
 using MySql.Data.MySqlClient;
-using System.Timers;
+using System.Threading;
 
 namespace komunikator
 {
@@ -23,7 +23,7 @@ namespace komunikator
     public partial class KonwersacjaOkno : Window
     {
         private Konwersacja k;
-        private Timer odswiezacz=new Timer();
+        private Timer odswiezacz;
 
         public KonwersacjaOkno()
         {
@@ -34,27 +34,37 @@ namespace komunikator
             {
                 czat.Items.Add(new Konwersacja.Wiadomosc { tresc = i.tresc, data = i.data, uzytkownik = i.uzytkownik });
             }
-            odswiezacz.Elapsed += new ElapsedEventHandler(OnOdswiezEvent);
-            odswiezacz.Interval = 1000;
-            odswiezacz.Start();
+            odswiezacz = new Timer(new TimerCallback(OnOdswiezEvent), k, 1000, 1000);
         }
 
-        private void OnOdswiezEvent(object oSource, ElapsedEventArgs oElapsedEventArgs)
+        private void OnOdswiezEvent(object o)
         {
-            
+            if (((Konwersacja)o).sprawdzCzySaNoweWiadomosci())
+            {
+                Dispatcher.Invoke(dodajNoweWiadomosci);
+            }
+        }
+
+        private void dodajNoweWiadomosci()
+        {
+            List<Konwersacja.Wiadomosc> wiadomosci = k.odswiezKonwersacje();
+            foreach (Konwersacja.Wiadomosc i in wiadomosci)
+            {
+                czat.Items.Add(new Konwersacja.Wiadomosc { tresc = i.tresc, data = i.data, uzytkownik = i.uzytkownik });
+            }
         }
 
         private void wyslijPrzycisk_Click(object sender, RoutedEventArgs e)
         {
             string czasSerwera=null;
-            //try
-            //{
+            try
+            {
                 czasSerwera=k.wyslijWiadomosc(wiadomoscTekst.Text);
-            //}
-            //catch(MySqlException)
-            //{
-                //MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
+            }
+            catch(MySqlException)
+            {
+                MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             czat.Items.Add(new Konwersacja.Wiadomosc { tresc = wiadomoscTekst.Text, data = czasSerwera, uzytkownik = k.login });
             wiadomoscTekst.Text = "";
         }

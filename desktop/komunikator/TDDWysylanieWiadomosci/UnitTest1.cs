@@ -33,6 +33,16 @@ namespace TDDWysylanieWiadomosci
         }
 
         [TestMethod]
+        public void sprawdzCzySaNoweWiadomosciTekst()
+        {
+            Konwersacja k1 = new Konwersacja("uzytkownik1", "uzytkownik2");
+            k1.wyslijWiadomosc("TEST");
+            Konwersacja k2 = new Konwersacja("uzytkownik2", "uzytkownik1");
+            bool wynik = k2.sprawdzCzySaNoweWiadomosci();
+            Assert.AreEqual(true, wynik);
+        }
+
+        [TestMethod]
         public void wyslijWiadomoscTest()
         {
             Konwersacja k = new Konwersacja("uzytkownik1", "uzytkownik2");

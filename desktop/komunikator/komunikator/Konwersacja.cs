@@ -108,14 +108,44 @@ namespace komunikator
                 return wiadomosci;
             }
 
-            public List<Wiadomosc> odswiezKonwersacje()
+            public bool sprawdzCzySaNoweWiadomosci()
             {
+                string wynikZapytania=null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
                 {
                     polaczenie.Open();
-                    MySqlCommand polecenie
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select count(*) from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while(wynik.Read())
+                    {
+                        wynikZapytania = wynik["count(*)"].ToString();
+                    }
                 }
-                return null;
+                return !wynikZapytania.Equals("0");
+            }
+
+            public List<Wiadomosc> odswiezKonwersacje()
+            {
+                List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+                        + znajdzIdUzytkownika(adresat)+" order by idWiadomosci";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while(wynik.Read())
+                    {
+                        wiadomosci.Add(new Wiadomosc
+                        {
+                            uzytkownik = adresat,
+                            data = wynik["data"].ToString(),
+                            tresc = wynik["tresc"].ToString()
+                        });
+                    }
+                }
+                return wiadomosci;
             }
 
             public class Wiadomosc
