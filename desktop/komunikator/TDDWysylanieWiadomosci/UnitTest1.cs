@@ -11,7 +11,7 @@ namespace TDDWysylanieWiadomosci
         [TestMethod]
         public void znajdzIdUzytkownikaTest()
         {
-            Konwersacja k = new Konwersacja(null);
+            Konwersacja k = new Konwersacja(null, null);
             string wynik1 = k.znajdzIdUzytkownika("uzytkownik1");
             string wynik2 = k.znajdzIdUzytkownika("uzytkownik2");
             string wynik3 = k.znajdzIdUzytkownika("uzytkownik3");
@@ -21,10 +21,22 @@ namespace TDDWysylanieWiadomosci
         }
 
         [TestMethod]
+        public void znajdzUzytkownikaPoIdtest()
+        {
+            Konwersacja k = new Konwersacja(null, null);
+            string wynik1 = k.znajdzUzytkownikaPoId("1");
+            string wynik2 = k.znajdzUzytkownikaPoId("2");
+            string wynik3 = k.znajdzUzytkownikaPoId("3");
+            Assert.AreEqual("uzytkownik1", wynik1);
+            Assert.AreEqual("uzytkownik2", wynik2);
+            Assert.AreEqual("uzytkownik3", wynik3);
+        }
+
+        [TestMethod]
         public void wyslijWiadomoscTest()
         {
-            Konwersacja k = new Konwersacja("uzytkownik1");
-            k.wyslijWiadomosc("TEST", "uzytkownik2");
+            Konwersacja k = new Konwersacja("uzytkownik1", "uzytkownik2");
+            k.wyslijWiadomosc("TEST");
             MySqlConnection polaczenie = new MySqlConnection("Server=localhost; database=komunikator; UID=root; password=");
             polaczenie.Open();
             MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -43,8 +55,8 @@ namespace TDDWysylanieWiadomosci
         [TestMethod]
         public void wyslijWiadomoscTest2()
         {
-            Konwersacja k = new Konwersacja("uzytkownik1");
-            string wynik=k.wyslijWiadomosc("TEST", "uzytkownik2");
+            Konwersacja k = new Konwersacja("uzytkownik1", "uzytkownik2");
+            string wynik=k.wyslijWiadomosc("TEST");
             MySqlConnection polaczenie = new MySqlConnection("Server=localhost; database=komunikator; UID=root; password=");
             polaczenie.Open();
             MySqlCommand zapytanie = polaczenie.CreateCommand();

@@ -14,12 +14,14 @@ namespace komunikator
         {
             private int wczytaneWiadomosci;
             public string login;
+            public string adresat;
             private const string daneBazy = "Server=localhost; database=komunikator; UID=root; password=";
 
-            public Konwersacja(string login)
+            public Konwersacja(string login, string adresat)
             {
                 wczytaneWiadomosci = 0;
                 this.login = login;
+                this.adresat = adresat;
             }
 
             public string znajdzIdUzytkownika(string login)
@@ -42,7 +44,27 @@ namespace komunikator
                 return id;
             }
 
-            public string wyslijWiadomosc(string tresc, string adresat)
+            public string znajdzUzytkownikaPoId(string id)
+            {
+                string uzytkownik = null;
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select login from uzytkownicy where idUzytkownika='" + id + "'";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        uzytkownik = wynik["login"].ToString();
+                    }
+                    wynik.Close();
+                    wynik.Dispose();
+                    zapytanie.Dispose();
+                }
+                return uzytkownik;
+            }
+
+            public string wyslijWiadomosc(string tresc)
             {
                 string czasWiadomosci = null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
@@ -63,10 +85,27 @@ namespace komunikator
                 return czasWiadomosci;
             }
 
-            public string[] wczytajWiadomosci(string uzytkownikWysylajacy, string adresat)
+            public List<Wiadomosc> wczytajWiadomosci()
             {
-
-                return null;
+                List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                        + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login) + ") order by data";
+                    MySqlDataReader wynik = polecenie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        wiadomosci.Add(new Wiadomosc
+                        {
+                            uzytkownik = znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()),
+                            data = wynik["data"].ToString(),
+                            tresc = wynik["tresc"].ToString()
+                        });
+                    }
+                }
+                return wiadomosci;
             }
 
             public class Wiadomosc
