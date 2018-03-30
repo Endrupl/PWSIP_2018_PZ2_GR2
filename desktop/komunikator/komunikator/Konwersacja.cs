@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Windows;
 
 namespace komunikator
 {
@@ -22,7 +23,7 @@ namespace komunikator
                 this.adresat = adresat;
             }
 
-            private string znajdzIdUzytkownika(string login)
+            private static string znajdzIdUzytkownika(string login)
             {
                 string id = null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
@@ -42,7 +43,7 @@ namespace komunikator
                 return id;
             }
 
-            private string znajdzUzytkownikaPoId(string id)
+            private static string znajdzUzytkownikaPoId(string id)
             {
                 string uzytkownik=null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
@@ -151,6 +152,65 @@ namespace komunikator
                     polecenie.ExecuteReader();
                 }
                 return wiadomosci;
+            }
+
+            public static bool znajdzUzytkownika(string szukanyLogin)
+            {
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select count(*) from uzytkownicy where login='" + szukanyLogin + "'";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while(wynik.Read())
+                    {
+                        if(wynik["count(*)"].ToString().Equals("0"))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
+
+            public static void dodajKontakt(string login1, string login2)
+            {
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "insert into kontakty values(null, " + znajdzIdUzytkownika(login1) + ", " + znajdzIdUzytkownika(login2) + ")";
+                    polecenie.ExecuteReader();
+                }
+            }
+
+            public static List<string> zaladujKontakty(string login)
+            {
+                List<string> kontakty = new List<string>();
+                string id = znajdzIdUzytkownika(login);
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select idUzytkownika1, idUzytkownika2 from kontakty where idUzytkownika1=" + id + " or idUzytkownika2=" + id;
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while(wynik.Read())
+                    {
+                        if(wynik["idUzytkownika1"].ToString().Equals(id))
+                        {
+                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika2"].ToString()));
+                        }
+                        else
+                        {
+                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika1"].ToString()));
+                        }
+                    }
+                }
+                return kontakty;
             }
 
             public class Wiadomosc

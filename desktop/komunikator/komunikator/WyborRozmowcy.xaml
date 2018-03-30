@@ -5,24 +5,34 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:komunikator"
         mc:Ignorable="d"
-        Title="WyborRozmowcy" Height="500" Width="300">
+        Title="WyborRozmowcy" Height="500" Width="300" MinHeight="500">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" MinWidth="75"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto" MinHeight="419"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="391*"/>
+            <RowDefinition Height="29*"/>
         </Grid.RowDefinitions>
-        <TextBox x:Name="textBox" Height="27" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16"/>
-        <Button x:Name="button" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="0,10,0,0" VerticalAlignment="Top" Width="65" FontSize="8">
+        <TextBox x:Name="szukanyUzytkownik" Height="27" Margin="10,10,10,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" KeyDown="szukanyUzytkownik_KeyDown"/>
+        <Button x:Name="dodajUzytkownika" Grid.Column="1" HorizontalAlignment="Left" Height="27" Margin="0,10,0,0" VerticalAlignment="Top" Width="65" FontSize="8" Click="dodajUzytkownika_Click">
             <StackPanel>
                 <TextBlock TextAlignment="Center">Dodaj</TextBlock>
                 <TextBlock TextAlignment="Center">użytkownika</TextBlock>
             </StackPanel>
         </Button>
-        <ListBox x:Name="listBox" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Height="419"/>
-
+        <ListBox x:Name="kontakty" Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="75*"/>
+                <ColumnDefinition Width="142*"/>
+                <ColumnDefinition Width="75*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="otworz" Content="Otwórz" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Top" MinWidth="122" Height="19" Grid.Column="1" Click="otworz_Click"/>
+            <Button x:Name="button1" Content="Usuń" Grid.Column="2" HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Top" Width="55" Height="19"/>
+            <Button x:Name="button1_Copy" Content="Blokuj" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="55" Height="19"/>
+        </Grid>
     </Grid>
 </Window>

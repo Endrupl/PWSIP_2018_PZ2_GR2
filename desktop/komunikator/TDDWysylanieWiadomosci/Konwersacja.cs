@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using System.Windows;
 
 namespace komunikator
 {
@@ -131,12 +132,53 @@ namespace komunikator
 
             public List<Wiadomosc> odswiezKonwersacje()
             {
+                List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
                 {
                     polaczenie.Open();
-                    //MySqlCommand polecenie
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+                        + znajdzIdUzytkownika(adresat) + " order by idWiadomosci";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        wiadomosci.Add(new Wiadomosc
+                        {
+                            uzytkownik = adresat,
+                            data = wynik["data"].ToString(),
+                            tresc = wynik["tresc"].ToString()
+                        });
+                    }
+                    wynik.Close();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "update wiadomosci set wyswietlona=1 where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+                        + znajdzIdUzytkownika(adresat);
+                    polecenie.ExecuteReader();
                 }
-                return null;
+                return wiadomosci;
+            }
+
+            public static bool znajdzUzytkownika(string szukanyLogin)
+            {
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select count(*) from uzytkownicy where login='" + szukanyLogin + "'";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        if (wynik["count(*)"].ToString().Equals("0"))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
             }
 
             public class Wiadomosc

@@ -43,6 +43,19 @@ namespace TDDWysylanieWiadomosci
         }
 
         [TestMethod]
+        public void znajdzUzytkownikaTest()
+        {
+            bool wynik1 = Konwersacja.znajdzUzytkownika("uzytkownik1");
+            bool wynik2 = Konwersacja.znajdzUzytkownika("uzytkownik2");
+            bool wynik3 = Konwersacja.znajdzUzytkownika("uzytkownik3");
+            bool wynik4 = Konwersacja.znajdzUzytkownika("dgfdgsfgs");
+            Assert.AreEqual(true, wynik1);
+            Assert.AreEqual(true, wynik2);
+            Assert.AreEqual(true, wynik3);
+            Assert.AreEqual(false, wynik4);
+        }
+
+        [TestMethod]
         public void wyslijWiadomoscTest()
         {
             Konwersacja k = new Konwersacja("uzytkownik1", "uzytkownik2");

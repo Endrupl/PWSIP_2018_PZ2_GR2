@@ -33,7 +33,7 @@
                 <GridView>
                     <GridViewColumn Header="Czas" DisplayMemberBinding="{Binding data}"/>
                     <GridViewColumn Header="Użytkownik" DisplayMemberBinding="{Binding uzytkownik}"/>
-                    <GridViewColumn Header="Wiadomość" DisplayMemberBinding="{Binding tresc}"/>
+                    <GridViewColumn Header="Wiadomość" DisplayMemberBinding="{Binding tresc}" Width="1920"/>
                 </GridView>
             </ListView.View>
         </ListView>
