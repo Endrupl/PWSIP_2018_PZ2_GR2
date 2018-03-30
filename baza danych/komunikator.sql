@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 30 Mar 2018, 16:51
+-- Czas generowania: 30 Mar 2018, 19:17
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.3
 
@@ -40,7 +40,7 @@ CREATE TABLE `kontakty` (
 
 INSERT INTO `kontakty` (`idKontaktu`, `idUzytkownika1`, `idUzytkownika2`) VALUES
 (1, 1, 2),
-(2, 1, 3);
+(3, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -189,7 +189,16 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 (107, 1, 2, 'test', '2018-03-29 20:33:40', 0),
 (108, 1, 2, 'TEST', '2018-03-30 15:18:44', 0),
 (109, 1, 2, 'TEST', '2018-03-30 15:18:44', 0),
-(110, 1, 2, 'TEST', '2018-03-30 15:18:44', 0);
+(110, 1, 2, 'TEST', '2018-03-30 15:18:44', 0),
+(111, 1, 3, 'test', '2018-03-30 17:51:22', 0),
+(112, 1, 3, 'test', '2018-03-30 17:54:28', 0),
+(113, 1, 2, 'TEST', '2018-03-30 18:18:12', 0),
+(114, 1, 2, 'TEST', '2018-03-30 18:18:12', 0),
+(115, 1, 2, 'TEST', '2018-03-30 18:18:12', 0),
+(116, 1, 2, 'TEST', '2018-03-30 18:18:12', 0),
+(117, 2, 1, 'fgf', '2018-03-30 18:26:31', 0),
+(118, 3, 1, 'test', '2018-03-30 18:57:02', 0),
+(119, 2, 1, 'test', '2018-03-30 18:57:15', 0);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -221,7 +230,7 @@ ALTER TABLE `wiadomosci`
 -- AUTO_INCREMENT dla tabeli `kontakty`
 --
 ALTER TABLE `kontakty`
-  MODIFY `idKontaktu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idKontaktu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
@@ -233,7 +242,7 @@ ALTER TABLE `uzytkownicy`
 -- AUTO_INCREMENT dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
+  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

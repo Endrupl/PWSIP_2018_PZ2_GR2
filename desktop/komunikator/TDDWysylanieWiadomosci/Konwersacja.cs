@@ -23,7 +23,7 @@ namespace komunikator
                 this.adresat = adresat;
             }
 
-            public string znajdzIdUzytkownika(string login)
+            public static string znajdzIdUzytkownika(string login)
             {
                 string id = null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
@@ -43,7 +43,7 @@ namespace komunikator
                 return id;
             }
 
-            public string znajdzUzytkownikaPoId(string id)
+            public static string znajdzUzytkownikaPoId(string id)
             {
                 string uzytkownik = null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
@@ -130,6 +130,23 @@ namespace komunikator
                 return !wynikZapytania.Equals("0");
             }
 
+            public static bool sprawdzCzySaNoweWiadomosci(string login)
+            {
+                string wynikZapytania = null;
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select count(*) from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        wynikZapytania = wynik["count(*)"].ToString();
+                    }
+                }
+                return !wynikZapytania.Equals("0");
+            }
+
             public List<Wiadomosc> odswiezKonwersacje()
             {
                 List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
@@ -180,6 +197,58 @@ namespace komunikator
                 }
                 return false;
             }
+
+            public static void dodajKontakt(string login1, string login2)
+            {
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "insert into kontakty values(null, " + znajdzIdUzytkownika(login1) + ", " + znajdzIdUzytkownika(login2) + ")";
+                    polecenie.ExecuteReader();
+                }
+            }
+
+            public static List<string> zaladujKontakty(string login)
+            {
+                List<string> kontakty = new List<string>();
+                string id = znajdzIdUzytkownika(login);
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select idUzytkownika1, idUzytkownika2 from kontakty where idUzytkownika1=" + id + " or idUzytkownika2=" + id;
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        if (wynik["idUzytkownika1"].ToString().Equals(id))
+                        {
+                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika2"].ToString()));
+                        }
+                        else
+                        {
+                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika1"].ToString()));
+                        }
+                    }
+                }
+                return kontakty;
+            }
+
+            public static void usunKontakt(string login1, string login2)
+            {
+                string id1 = znajdzIdUzytkownika(login1);
+                string id2 = znajdzIdUzytkownika(login2);
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "delete from kontakty where (idUzytkownika1=" + id1 + " and idUzytkownika2=" + id2 + ") or (idUzytkownika1=" + id2
+                        + " and idUzytkownika2=" + id1 + ")";
+                    polecenie.ExecuteReader();
+                }
+            }
+
+
 
             public class Wiadomosc
             {

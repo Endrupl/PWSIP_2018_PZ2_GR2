@@ -25,9 +25,9 @@ namespace komunikator
         private Konwersacja k;
         private Timer odswiezacz;
 
-        public KonwersacjaOkno()
+        public KonwersacjaOkno(string loginZalogowanego, string loginAdresata)
         {
-            k = new Konwersacja("uzytkownik1", "uzytkownik2");//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1 i konwersacja odbywa się z użytkownikiem uzytkownik2
+            k = new Konwersacja(loginZalogowanego, loginAdresata);
             InitializeComponent();
             try
             {

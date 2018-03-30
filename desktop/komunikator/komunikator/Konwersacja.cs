@@ -126,6 +126,23 @@ namespace komunikator
                 return !wynikZapytania.Equals("0");
             }
 
+            public static bool sprawdzCzySaNoweWiadomosci(string login)
+            {
+                string wynikZapytania = null;
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select count(*) from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        wynikZapytania = wynik["count(*)"].ToString();
+                    }
+                }
+                return !wynikZapytania.Equals("0");
+            }
+
             public List<Wiadomosc> odswiezKonwersacje()
             {
                 List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
@@ -211,6 +228,39 @@ namespace komunikator
                     }
                 }
                 return kontakty;
+            }
+
+            public static void usunKontakt(string login1, string login2)
+            {
+                string id1 = znajdzIdUzytkownika(login1);
+                string id2 = znajdzIdUzytkownika(login2);
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "delete from kontakty where (idUzytkownika1=" + id1 + " and idUzytkownika2=" + id2 + ") or (idUzytkownika1=" + id2
+                        + " and idUzytkownika2=" + id1 + ")";
+                    polecenie.ExecuteReader();
+                }
+            }
+
+            public static Dictionary<string, int> wyswietlPowiadomieniaONowychWiadomosciach(string login)
+            {
+                string id = znajdzIdUzytkownika(login);
+                Dictionary<string, int> nieodczytaneWiadomosci = new Dictionary<string, int>();
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select distinct(w1.idWysylajacego), (SELECT count(*) from wiadomosci w2 where w2.idWysylajacego = w1.idWysylajacego" 
+                        + "and w2.wyswietlona = 0) as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while(wynik.Read())
+                    {
+                        nieodczytaneWiadomosci.Add(znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()), int.Parse(wynik["niewyswietlona"].ToString()));
+                    }
+                    return nieodczytaneWiadomosci;
+                }
             }
 
             public class Wiadomosc

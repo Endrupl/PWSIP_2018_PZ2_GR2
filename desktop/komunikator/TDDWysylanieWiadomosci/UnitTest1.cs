@@ -11,34 +11,41 @@ namespace TDDWysylanieWiadomosci
         [TestMethod]
         public void znajdzIdUzytkownikaTest()
         {
-            Konwersacja k = new Konwersacja(null, null);
-            string wynik1 = k.znajdzIdUzytkownika("uzytkownik1");
-            string wynik2 = k.znajdzIdUzytkownika("uzytkownik2");
-            string wynik3 = k.znajdzIdUzytkownika("uzytkownik3");
+            string wynik1 = Konwersacja.znajdzIdUzytkownika("uzytkownik1");
+            string wynik2 = Konwersacja.znajdzIdUzytkownika("uzytkownik2");
+            string wynik3 = Konwersacja.znajdzIdUzytkownika("uzytkownik3");
             Assert.AreEqual("1", wynik1);
             Assert.AreEqual("2", wynik2);
             Assert.AreEqual("3", wynik3);
         }
 
         [TestMethod]
-        public void znajdzUzytkownikaPoIdtest()
+        public void znajdzUzytkownikaPoIdTest()
         {
-            Konwersacja k = new Konwersacja(null, null);
-            string wynik1 = k.znajdzUzytkownikaPoId("1");
-            string wynik2 = k.znajdzUzytkownikaPoId("2");
-            string wynik3 = k.znajdzUzytkownikaPoId("3");
+            string wynik1 = Konwersacja.znajdzUzytkownikaPoId("1");
+            string wynik2 = Konwersacja.znajdzUzytkownikaPoId("2");
+            string wynik3 = Konwersacja.znajdzUzytkownikaPoId("3");
             Assert.AreEqual("uzytkownik1", wynik1);
             Assert.AreEqual("uzytkownik2", wynik2);
             Assert.AreEqual("uzytkownik3", wynik3);
         }
 
         [TestMethod]
-        public void sprawdzCzySaNoweWiadomosciTekst()
+        public void sprawdzCzySaNoweWiadomosciTest()
         {
             Konwersacja k1 = new Konwersacja("uzytkownik1", "uzytkownik2");
             k1.wyslijWiadomosc("TEST");
             Konwersacja k2 = new Konwersacja("uzytkownik2", "uzytkownik1");
             bool wynik = k2.sprawdzCzySaNoweWiadomosci();
+            Assert.AreEqual(true, wynik);
+        }
+
+        [TestMethod]
+        public void sprawdzCzySaNoweWiadomosciTest2()
+        {
+            Konwersacja k1 = new Konwersacja("uzytkownik1", "uzytkownik2");
+            k1.wyslijWiadomosc("TEST");
+            bool wynik = Konwersacja.sprawdzCzySaNoweWiadomosci("uzytkownik2");
             Assert.AreEqual(true, wynik);
         }
 
