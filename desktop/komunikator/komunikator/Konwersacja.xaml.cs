@@ -35,6 +35,7 @@ namespace komunikator
                 foreach(Konwersacja.Wiadomosc i in wiadomosci)
                 {
                     czat.Items.Add(new Konwersacja.Wiadomosc { tresc = i.tresc, data = i.data, uzytkownik = i.uzytkownik });
+                    czat.ScrollIntoView(czat.Items.GetItemAt(czat.Items.Count - 1));
                 }
             }
             catch(MySqlException)
@@ -75,12 +76,12 @@ namespace komunikator
             {
                 czasSerwera=k.wyslijWiadomosc(wiadomoscTekst.Text);
                 czat.Items.Add(new Konwersacja.Wiadomosc { tresc = wiadomoscTekst.Text, data = czasSerwera, uzytkownik = k.login });
+                czat.ScrollIntoView(czat.Items.GetItemAt(czat.Items.Count - 1));
             }
             catch(MySqlException)
             {
                 MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            
             wiadomoscTekst.Text = "";
         }
 

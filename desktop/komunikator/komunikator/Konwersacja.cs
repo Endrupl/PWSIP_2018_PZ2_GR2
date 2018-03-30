@@ -253,11 +253,11 @@ namespace komunikator
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
                     zapytanie.CommandText = "select distinct(w1.idWysylajacego), (SELECT count(*) from wiadomosci w2 where w2.idWysylajacego = w1.idWysylajacego" 
-                        + "and w2.wyswietlona = 0) as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0";
+                        + " and w2.wyswietlona = 0 and w2.idAdresata="+id+") as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0";
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
                     while(wynik.Read())
                     {
-                        nieodczytaneWiadomosci.Add(znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()), int.Parse(wynik["niewyswietlona"].ToString()));
+                        nieodczytaneWiadomosci.Add(znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()), int.Parse(wynik["niewyswietlone"].ToString()));
                     }
                     return nieodczytaneWiadomosci;
                 }
@@ -268,6 +268,24 @@ namespace komunikator
                 public string tresc { get; set; }
                 public string uzytkownik { get; set; }
                 public string data { get; set; }
+            }
+
+            public class Kontakt
+            {
+                public string login { get; set; }
+                public int nieodczytaneWiadomosci { get; set; }
+
+                public override string ToString()
+                {
+                    if (nieodczytaneWiadomosci == 0)
+                    {
+                        return login;
+                    }
+                    else
+                    {
+                        return login + " (" + nieodczytaneWiadomosci + ")";
+                    }
+                }
             }
         }
     }
