@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 29 Mar 2018, 21:39
+-- Czas generowania: 30 Mar 2018, 16:51
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.3
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `komunikator`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `kontakty`
+--
+
+CREATE TABLE `kontakty` (
+  `idKontaktu` int(3) NOT NULL,
+  `idUzytkownika1` int(5) NOT NULL,
+  `idUzytkownika2` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Zrzut danych tabeli `kontakty`
+--
+
+INSERT INTO `kontakty` (`idKontaktu`, `idUzytkownika1`, `idUzytkownika2`) VALUES
+(1, 1, 2),
+(2, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -166,11 +186,20 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 (104, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:30:13', 1),
 (105, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:32:35', 1),
 (106, 2, 1, 'wiadomo?? testowa', '2018-03-29 20:33:27', 1),
-(107, 1, 2, 'test', '2018-03-29 20:33:40', 0);
+(107, 1, 2, 'test', '2018-03-29 20:33:40', 0),
+(108, 1, 2, 'TEST', '2018-03-30 15:18:44', 0),
+(109, 1, 2, 'TEST', '2018-03-30 15:18:44', 0),
+(110, 1, 2, 'TEST', '2018-03-30 15:18:44', 0);
 
 --
 -- Indeksy dla zrzutów tabel
 --
+
+--
+-- Indeksy dla tabeli `kontakty`
+--
+ALTER TABLE `kontakty`
+  ADD PRIMARY KEY (`idKontaktu`);
 
 --
 -- Indeksy dla tabeli `uzytkownicy`
@@ -189,6 +218,12 @@ ALTER TABLE `wiadomosci`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `kontakty`
+--
+ALTER TABLE `kontakty`
+  MODIFY `idKontaktu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
@@ -198,7 +233,7 @@ ALTER TABLE `uzytkownicy`
 -- AUTO_INCREMENT dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
