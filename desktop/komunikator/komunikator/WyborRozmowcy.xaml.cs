@@ -1,19 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using komunikator.wysylanieWiadomosci;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace komunikator
 {
@@ -22,7 +13,7 @@ namespace komunikator
     /// </summary>
     public partial class WyborRozmowcy : Window
     {
-        private string zalogowanyUzytkownik = "uzytkownik2";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
+        private string zalogowanyUzytkownik = "uzytkownik1";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
         private Timer odswiezacz;
 
         public WyborRozmowcy()
@@ -52,14 +43,20 @@ namespace komunikator
                 }
                 else
                 {
-                    foreach(Konwersacja.Kontakt i in kontakty.Items)
-                    {
-                        i.nieodczytaneWiadomosci = 0;
-                    }
-                    Dispatcher.Invoke(() => kontakty.Items.Refresh());
+                    Dispatcher.Invoke(odswiezKontaktyIWyzerujNoweWiadomosci);
                 }
             }
             catch (MySqlException) { }
+            catch (TaskCanceledException) { }
+        }
+
+        private void odswiezKontaktyIWyzerujNoweWiadomosci()
+        {
+            foreach (Konwersacja.Kontakt i in kontakty.Items)
+            {
+                i.nieodczytaneWiadomosci = 0;
+            }
+            kontakty.Items.Refresh();
         }
 
         private void poinformujONowychWiadomosciach()
@@ -74,6 +71,7 @@ namespace komunikator
                         ((Konwersacja.Kontakt)kontakty.Items.GetItemAt(i)).nieodczytaneWiadomosci = j.Value;
                         break;
                     }
+                    ((Konwersacja.Kontakt)kontakty.Items.GetItemAt(i)).nieodczytaneWiadomosci = 0;
                 }
             }
             kontakty.Items.Refresh();

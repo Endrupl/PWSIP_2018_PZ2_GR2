@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MySql.Data;
+﻿using System.Collections.Generic;
 using MySql.Data.MySqlClient;
-using System.Windows;
 
 namespace komunikator
 {
@@ -111,7 +105,7 @@ namespace komunikator
 
             public bool sprawdzCzySaNoweWiadomosci()
             {
-                string wynikZapytania=null;
+                string wynikZapytania = null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
                 {
                     polaczenie.Open();
@@ -252,15 +246,15 @@ namespace komunikator
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
-                    zapytanie.CommandText = "select distinct(w1.idWysylajacego), (SELECT count(*) from wiadomosci w2 where w2.idWysylajacego = w1.idWysylajacego" 
-                        + " and w2.wyswietlona = 0 and w2.idAdresata="+id+") as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0";
+                    zapytanie.CommandText = "select distinct(w1.idWysylajacego), (SELECT count(*) from wiadomosci w2 where w2.idWysylajacego = w1.idWysylajacego"
+                        + " and w2.wyswietlona = 0 and w2.idAdresata=" + id + ") as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0";
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
                     while(wynik.Read())
                     {
                         nieodczytaneWiadomosci.Add(znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()), int.Parse(wynik["niewyswietlone"].ToString()));
                     }
-                    return nieodczytaneWiadomosci;
                 }
+                return nieodczytaneWiadomosci;
             }
 
             public class Wiadomosc
