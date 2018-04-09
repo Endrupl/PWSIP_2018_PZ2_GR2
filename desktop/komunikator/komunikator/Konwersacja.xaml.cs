@@ -56,6 +56,7 @@ namespace komunikator
             {
                 czat.Items.Add(new Konwersacja.Wiadomosc { tresc = i.tresc, data = i.data, uzytkownik = i.uzytkownik });
             }
+            czat.ScrollIntoView(czat.Items.GetItemAt(czat.Items.Count - 1));
         }
 
         private void wyslijPrzycisk_Click(object sender, RoutedEventArgs e)
