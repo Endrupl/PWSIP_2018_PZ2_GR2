@@ -21,7 +21,7 @@ public class WyborRozmowcy extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybor_rozmowcy);
         List<String> kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2, android.R.id.text1, kontaktyUzytkownika);
-        kontakty.setAdapter(adapter);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_2, android.R.id.text1, kontaktyUzytkownika);
+        //kontakty.setAdapter(adapter);
     }
 }
