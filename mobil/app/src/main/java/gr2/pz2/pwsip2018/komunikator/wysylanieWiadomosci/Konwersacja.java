@@ -73,7 +73,7 @@ public class Konwersacja
             ResultSet wynik=st.executeQuery("select idUzytkownika1, idUzytkownika2 from kontakty where idUzytkownika1=" + id + " or idUzytkownika2=" + id);
             while(wynik.next())
             {
-                if(wynik.getString("idUzytkownika").equals(id))
+                if(wynik.getString("idUzytkownika1").equals(id))
                 {
                     kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika2")));
                 }
@@ -85,7 +85,9 @@ public class Konwersacja
         }
         catch (Exception e)
         {
-
+            ArrayList<String> f=new ArrayList<String>();
+            f.add(e.getMessage());
+            return f;
         }
         return kontakty;
     }

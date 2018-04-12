@@ -1,6 +1,15 @@
 package gr2.pz2.pwsip2018.komunikator;
 
+import android.support.annotation.NonNull;
+
 import org.junit.Test;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
 
