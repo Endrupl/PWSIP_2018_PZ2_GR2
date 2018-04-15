@@ -56,6 +56,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Uzytkownik.cs" />
     <Compile Include="WyborRozmowcy.xaml.cs">
       <DependentUpon>WyborRozmowcy.xaml</DependentUpon>
     </Compile>

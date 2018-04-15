@@ -9,7 +9,7 @@ namespace komunikator
         {
             public string login;
             public string adresat;
-            private const string daneBazy= "Server=localhost; database=komunikator; UID=root; password=";
+            private const string daneBazy= "Server=localhost; database=komunikator; UID=root; password=; CharSet=utf8";
 
             public Konwersacja(string login, string adresat)
             {
@@ -17,7 +17,7 @@ namespace komunikator
                 this.adresat = adresat;
             }
 
-            private static string znajdzIdUzytkownika(string login)
+            public static string znajdzIdUzytkownika(string login)
             {
                 string id = null;
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
@@ -49,6 +49,29 @@ namespace komunikator
                     while (wynik.Read())
                     {
                         uzytkownik = wynik["login"].ToString();
+                    }
+                    wynik.Close();
+                    wynik.Dispose();
+                    zapytanie.Dispose();
+                }
+                return uzytkownik;
+            }
+
+            public static Uzytkownik znajdzDaneUzytkownikaPoId(int id)
+            {
+                Uzytkownik uzytkownik = null;
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select login, status from uzytkownicy where idUzytkownika='" + id + "'";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        uzytkownik = new komunikator.Uzytkownik();
+                        uzytkownik.idUzytkownika = id;
+                        uzytkownik.login = wynik["login"].ToString();
+                        uzytkownik.status = wynik["status"].ToString();
                     }
                     wynik.Close();
                     wynik.Dispose();
@@ -199,9 +222,20 @@ namespace komunikator
                 }
             }
 
-            public static List<string> zaladujKontakty(string login)
+            public static void zapiszStatusUzytkownika(int idUzytkownika, string status)
             {
-                List<string> kontakty = new List<string>();
+                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "update uzytkownicy set status='"+status+"' where idUzytkownika="+idUzytkownika;
+                    polecenie.ExecuteNonQuery();
+                }
+            }
+
+            public static List<Konwersacja.Kontakt> zaladujKontakty(string login)
+            {
+                List<Konwersacja.Kontakt> kontakty = new List<Konwersacja.Kontakt>();
                 string id = znajdzIdUzytkownika(login);
                 using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
                 {
@@ -211,14 +245,20 @@ namespace komunikator
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
                     while(wynik.Read())
                     {
+                        Uzytkownik uzytkownik = null;
                         if(wynik["idUzytkownika1"].ToString().Equals(id))
                         {
-                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika2"].ToString()));
+                            uzytkownik = znajdzDaneUzytkownikaPoId(int.Parse(wynik["idUzytkownika2"].ToString()));
                         }
                         else
                         {
-                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika1"].ToString()));
+                            uzytkownik = znajdzDaneUzytkownikaPoId(int.Parse(wynik["idUzytkownika1"].ToString()));
                         }
+                        kontakty.Add(new Konwersacja.Kontakt()
+                        {
+                            login = uzytkownik.login,
+                            status = uzytkownik.status != "niewidoczny" ? uzytkownik.status : "niedostępny"
+                        });
                     }
                 }
                 return kontakty;
@@ -268,17 +308,17 @@ namespace komunikator
             {
                 public string login { get; set; }
                 public int nieodczytaneWiadomosci { get; set; }
+                public string status { get; set; }
 
                 public override string ToString()
                 {
-                    if (nieodczytaneWiadomosci == 0)
+                    string kontaktInfo = login;
+                    if (nieodczytaneWiadomosci > 0)
                     {
-                        return login;
+                        kontaktInfo = kontaktInfo + " (" + nieodczytaneWiadomosci + ")";
                     }
-                    else
-                    {
-                        return login + " (" + nieodczytaneWiadomosci + ")";
-                    }
+                    kontaktInfo = kontaktInfo + " " + status;
+                    return kontaktInfo;
                 }
             }
         }

@@ -14,17 +14,26 @@ namespace komunikator
     public partial class WyborRozmowcy : Window
     {
         private string zalogowanyUzytkownik = "uzytkownik1";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
+        private int idzalogowanegouzytkownika = 0;
         private Timer odswiezacz;
 
         public WyborRozmowcy()
         {
             InitializeComponent();
+            statusUzytkownika.ItemsSource = new List<string>()
+            {
+                "dostępny","zajęty","niewidoczny","niedostępny"
+            };
             try
             {
-                foreach (string i in Konwersacja.zaladujKontakty(zalogowanyUzytkownik))
+                foreach (Konwersacja.Kontakt i in Konwersacja.zaladujKontakty(zalogowanyUzytkownik))
                 {
-                    kontakty.Items.Add(new Konwersacja.Kontakt { login = i });
+                    kontakty.Items.Add(i);
                 }
+                idzalogowanegouzytkownika = int.Parse(Konwersacja.znajdzIdUzytkownika(zalogowanyUzytkownik));
+                Uzytkownik danezalogowanegouzytkownika = Konwersacja.znajdzDaneUzytkownikaPoId(idzalogowanegouzytkownika);
+                statusUzytkownika.SelectedValue = danezalogowanegouzytkownika.status;
+                otworz.IsEnabled = statusUzytkownika.SelectedValue.ToString() != "niedostępny";
             }
             catch(MySqlException)
             {
@@ -144,6 +153,16 @@ namespace komunikator
             {
                 MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void statusUzytkownika_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if(statusUzytkownika.SelectedValue!=null)
+            {
+                Konwersacja.zapiszStatusUzytkownika(idzalogowanegouzytkownika, statusUzytkownika.SelectedValue.ToString());
+                otworz.IsEnabled = statusUzytkownika.SelectedValue.ToString() != "niedostępny";
+            }
+            
         }
     }
 }
