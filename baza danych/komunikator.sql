@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 31 Mar 2018, 14:02
--- Wersja serwera: 10.1.31-MariaDB
--- Wersja PHP: 7.2.3
+-- Czas generowania: 15 Kwi 2018, 21:36
+-- Wersja serwera: 10.1.28-MariaDB
+-- Wersja PHP: 7.1.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -51,17 +51,18 @@ INSERT INTO `kontakty` (`idKontaktu`, `idUzytkownika1`, `idUzytkownika2`) VALUES
 
 CREATE TABLE `uzytkownicy` (
   `idUzytkownika` int(5) NOT NULL,
-  `login` varchar(20) DEFAULT NULL
+  `login` varchar(20) DEFAULT NULL,
+  `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL DEFAULT 'niedostępny'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Zrzut danych tabeli `uzytkownicy`
 --
 
-INSERT INTO `uzytkownicy` (`idUzytkownika`, `login`) VALUES
-(1, 'uzytkownik1'),
-(2, 'uzytkownik2'),
-(3, 'uzytkownik3');
+INSERT INTO `uzytkownicy` (`idUzytkownika`, `login`, `status`) VALUES
+(1, 'uzytkownik1', 'niewidoczny'),
+(2, 'uzytkownik2', 'niewidoczny'),
+(3, 'uzytkownik3', 'niedostępny');
 
 -- --------------------------------------------------------
 
@@ -336,19 +337,19 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 --
 
 --
--- Indeksy dla tabeli `kontakty`
+-- Indexes for table `kontakty`
 --
 ALTER TABLE `kontakty`
   ADD PRIMARY KEY (`idKontaktu`);
 
 --
--- Indeksy dla tabeli `uzytkownicy`
+-- Indexes for table `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
   ADD PRIMARY KEY (`idUzytkownika`);
 
 --
--- Indeksy dla tabeli `wiadomosci`
+-- Indexes for table `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
   ADD PRIMARY KEY (`idWiadomosci`);
