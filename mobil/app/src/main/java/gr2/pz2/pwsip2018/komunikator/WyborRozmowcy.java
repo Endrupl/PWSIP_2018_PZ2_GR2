@@ -1,16 +1,15 @@
 package gr2.pz2.pwsip2018.komunikator;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
 
 public class WyborRozmowcy extends AppCompatActivity
@@ -22,16 +21,29 @@ public class WyborRozmowcy extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybor_rozmowcy);
+        ArrayAdapter<String> adapter;
         try
         {
             ArrayList<String> kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
             kontakty=findViewById(R.id.kontakty);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
+            adapter = new ArrayAdapter<String>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
             kontakty.setAdapter(adapter);
         }
         catch (SQLException e)
         {
             Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
         }
+        kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
+            {
+                String kontakt = (String) kontakty.getItemAtPosition(pozycja);
+                Intent i=new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
+                i.putExtra("uzytkownik", zalogowanyUzytkownik);
+                i.putExtra("adresat", kontakt);
+                startActivity(i);
+            }
+        });
     }
 }

@@ -1,7 +1,6 @@
 package gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci;
 
 import android.os.StrictMode;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -43,20 +42,13 @@ public class Konwersacja
         String id = null;
         Connection polaczenie;
         Statement st;
-        //try
-        //{
-            polaczenie= DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
-            st=polaczenie.createStatement();
-            ResultSet wynik=st.executeQuery("select idUzytkownika from uzytkownicy where login='" + login + "'");
-            while (wynik.next())
-            {
-                id=wynik.getString("idUzytkownika");
-            }
-        //}
-        //catch(Exception e)
-        //{
-//
-        //}
+        polaczenie= DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select idUzytkownika from uzytkownicy where login='" + login + "'");
+        while (wynik.next())
+        {
+            id=wynik.getString("idUzytkownika");
+        }
         return id;
     }
 
@@ -64,20 +56,13 @@ public class Konwersacja
     {
         przygotujDoPolaczeniaZBaza();
         String uzytkownik=null;
-        //try
-        //{
-            Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
-            Statement st=polaczenie.createStatement();
-            ResultSet wynik=st.executeQuery("select login from uzytkownicy where idUzytkownika='" + id + "'");
-            while (wynik.next())
-            {
-                uzytkownik=wynik.getString("login");
-            }
-        //}
-        //catch (Exception e)
-        //{
-//
-        //}
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select login from uzytkownicy where idUzytkownika='" + id + "'");
+        while (wynik.next())
+        {
+            uzytkownik=wynik.getString("login");
+        }
         return uzytkownik;
     }
 
@@ -86,29 +71,20 @@ public class Konwersacja
         przygotujDoPolaczeniaZBaza();
         ArrayList<String> kontakty = new ArrayList<String>();
         String id = znajdzIdUzytkownika(login);
-        //try
-        //{
-            Connection polaczenie = DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
-            Statement st=polaczenie.createStatement();
-            ResultSet wynik=st.executeQuery("select idUzytkownika1, idUzytkownika2 from kontakty where idUzytkownika1=" + id + " or idUzytkownika2=" + id);
-            while(wynik.next())
+        Connection polaczenie = DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select idUzytkownika1, idUzytkownika2 from kontakty where idUzytkownika1=" + id + " or idUzytkownika2=" + id);
+        while(wynik.next())
+        {
+            if(wynik.getString("idUzytkownika1").equals(id))
             {
-                if(wynik.getString("idUzytkownika1").equals(id))
-                {
-                    kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika2")));
-                }
-                else
-                {
-                    kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika1")));
-                }
+                kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika2")));
             }
-        //}
-        //catch (Exception e)
-        //{
-        //    ArrayList<String> f=new ArrayList<String>();
-        //    f.add(e.getMessage());
-        //    return f;
-        //}
+            else
+            {
+                kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika1")));
+            }
+        }
         return kontakty;
     }
 }
