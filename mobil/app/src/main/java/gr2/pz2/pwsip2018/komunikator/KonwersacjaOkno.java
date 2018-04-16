@@ -33,8 +33,10 @@ public class KonwersacjaOkno extends AppCompatActivity {
         ArrayAdapter<String> adapterWiadomosci = new ArrayAdapter<String>(this, R.layout.wiadomosc, R.id.tresc, al1);
         ArrayAdapter<String> adapterLoginy = new ArrayAdapter<String>(this, R.layout.wiadomosc, R.id.login, al2);
         ArrayAdapter<String> adapterCzas = new ArrayAdapter<String>(this, R.layout.wiadomosc, R.id.czas, al3);
-        czat.setAdapter(adapterWiadomosci);
-        czat.setAdapter(adapterLoginy);
+
         czat.setAdapter(adapterCzas);
+        czat.setAdapter(adapterLoginy);
+        czat.setAdapter(adapterWiadomosci);
+        adapterWiadomosci.add("123");
     }
 }
