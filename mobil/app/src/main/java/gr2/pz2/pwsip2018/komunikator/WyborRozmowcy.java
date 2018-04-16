@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +22,16 @@ public class WyborRozmowcy extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybor_rozmowcy);
-        ArrayList<String> kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
-        kontakty=findViewById(R.id.kontakty);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
-        kontakty.setAdapter(adapter);
+        try
+        {
+            ArrayList<String> kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
+            kontakty=findViewById(R.id.kontakty);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
+            kontakty.setAdapter(adapter);
+        }
+        catch (SQLException e)
+        {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+        }
     }
 }

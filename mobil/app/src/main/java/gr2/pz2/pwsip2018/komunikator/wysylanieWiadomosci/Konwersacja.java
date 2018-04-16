@@ -5,6 +5,7 @@ import android.os.StrictMode;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -36,14 +37,14 @@ public class Konwersacja
         }
     }
 
-    public static String znajdzIdUzytkownika(String login)
+    public static String znajdzIdUzytkownika(String login) throws SQLException
     {
         przygotujDoPolaczeniaZBaza();
         String id = null;
         Connection polaczenie;
         Statement st;
-        try
-        {
+        //try
+        //{
             polaczenie= DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
             st=polaczenie.createStatement();
             ResultSet wynik=st.executeQuery("select idUzytkownika from uzytkownicy where login='" + login + "'");
@@ -51,20 +52,20 @@ public class Konwersacja
             {
                 id=wynik.getString("idUzytkownika");
             }
-        }
-        catch(Exception e)
-        {
-
-        }
+        //}
+        //catch(Exception e)
+        //{
+//
+        //}
         return id;
     }
 
-    public static String znajdzUzytkownikaPoId(String id)
+    public static String znajdzUzytkownikaPoId(String id) throws SQLException
     {
         przygotujDoPolaczeniaZBaza();
         String uzytkownik=null;
-        try
-        {
+        //try
+        //{
             Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
             Statement st=polaczenie.createStatement();
             ResultSet wynik=st.executeQuery("select login from uzytkownicy where idUzytkownika='" + id + "'");
@@ -72,21 +73,21 @@ public class Konwersacja
             {
                 uzytkownik=wynik.getString("login");
             }
-        }
-        catch (Exception e)
-        {
-
-        }
+        //}
+        //catch (Exception e)
+        //{
+//
+        //}
         return uzytkownik;
     }
 
-    public static ArrayList<String> zaladujKontakty(String login)
+    public static ArrayList<String> zaladujKontakty(String login) throws SQLException
     {
         przygotujDoPolaczeniaZBaza();
         ArrayList<String> kontakty = new ArrayList<String>();
         String id = znajdzIdUzytkownika(login);
-        try
-        {
+        //try
+        //{
             Connection polaczenie = DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
             Statement st=polaczenie.createStatement();
             ResultSet wynik=st.executeQuery("select idUzytkownika1, idUzytkownika2 from kontakty where idUzytkownika1=" + id + " or idUzytkownika2=" + id);
@@ -101,13 +102,13 @@ public class Konwersacja
                     kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika1")));
                 }
             }
-        }
-        catch (Exception e)
-        {
-            ArrayList<String> f=new ArrayList<String>();
-            f.add(e.getMessage());
-            return f;
-        }
+        //}
+        //catch (Exception e)
+        //{
+        //    ArrayList<String> f=new ArrayList<String>();
+        //    f.add(e.getMessage());
+        //    return f;
+        //}
         return kontakty;
     }
 }

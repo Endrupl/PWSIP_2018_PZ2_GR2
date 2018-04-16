@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="gr2.pz2.pwsip2018.komunikator">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".WyborRozmowcy"></activity>-->
+        <!-- <activity android:name=".WyborRozmowcy"></activity> -->
+        <activity android:name=".KonwersacjaOkno"></activity>
     </application>
 
 </manifest>
