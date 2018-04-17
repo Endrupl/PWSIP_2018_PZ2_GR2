@@ -28,22 +28,22 @@ public class WyborRozmowcy extends AppCompatActivity
             kontakty=findViewById(R.id.kontakty);
             adapter = new ArrayAdapter<String>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
             kontakty.setAdapter(adapter);
+            kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
+                {
+                    String kontakt = (String) kontakty.getItemAtPosition(pozycja);
+                    Intent i=new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
+                    i.putExtra("uzytkownik", zalogowanyUzytkownik);
+                    i.putExtra("adresat", kontakt);
+                    startActivity(i);
+                }
+            });
         }
         catch (SQLException e)
         {
             Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
         }
-        kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
-            {
-                String kontakt = (String) kontakty.getItemAtPosition(pozycja);
-                Intent i=new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
-                i.putExtra("uzytkownik", zalogowanyUzytkownik);
-                i.putExtra("adresat", kontakt);
-                startActivity(i);
-            }
-        });
     }
 }

@@ -87,4 +87,56 @@ public class Konwersacja
         }
         return kontakty;
     }
+
+    public ArrayList<Wiadomosc> wczytajWiadomosci() throws SQLException
+    {
+        ArrayList<Wiadomosc> wiadomosci = new ArrayList<Wiadomosc>();
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego="+znajdzIdUzytkownika(login)+" and idAdresata="
+                +znajdzIdUzytkownika(adresat)+") or (idWysylajacego="+znajdzIdUzytkownika(adresat)+" and idAdresata="+znajdzIdUzytkownika(login)+") order by idWiadomosci");
+        while(wynik.next())
+        {
+            wiadomosci.add(new Wiadomosc(wynik.getString("tresc"), znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), wynik.getString("data")));
+        }
+        st.executeQuery("update wiadomosci set wyswietlona=1 where idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata="+ znajdzIdUzytkownika(login));
+        //zmienStatusWiadomosci();
+        //ResultSet polecenieZmianyStatusuWiadomosci=st.executeQuery("update wiadomosci set wyswietlona=1 where idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata="
+        //        + znajdzIdUzytkownika(login));
+        //using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+        //{
+        //    polaczenie.Open();
+        //    MySqlCommand polecenie = polaczenie.CreateCommand();
+        //    polecenie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego="+znajdzIdUzytkownika(login)+" and idAdresata="
+        //            +znajdzIdUzytkownika(adresat)+") or (idWysylajacego="+znajdzIdUzytkownika(adresat)+" and idAdresata="+znajdzIdUzytkownika(login)
+        //            +") order by idWiadomosci";
+        //    MySqlDataReader wynik = polecenie.ExecuteReader();
+        //    while(wynik.Read())
+        //    {
+        //        wiadomosci.Add(new Wiadomosc { uzytkownik = znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()), data = wynik["data"].ToString(),
+        //            tresc = wynik["tresc"].ToString() });
+        //    }
+        //    wynik.Close();
+        //    MySqlCommand polecenieZmianyStatusuWiadomosci = polaczenie.CreateCommand();
+        //    polecenieZmianyStatusuWiadomosci.CommandText = "update wiadomosci set wyswietlona=1 where idWysylajacego=" + znajdzIdUzytkownika(adresat)
+        //            + " and idAdresata="+ znajdzIdUzytkownika(login);
+        //    polecenieZmianyStatusuWiadomosci.ExecuteReader();
+        //}
+        return wiadomosci;
+    }
+
+    public static class Wiadomosc
+    {
+        public String tresc;
+        public String uzytkownik;
+        public String data;
+
+        public Wiadomosc(String tresc, String uzytkownik, String data)
+        {
+            this.tresc=tresc;
+            this.uzytkownik=uzytkownik;
+            this.data=data;
+        }
+    }
 }

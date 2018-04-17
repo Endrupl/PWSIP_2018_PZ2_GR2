@@ -2,10 +2,11 @@ package gr2.pz2.pwsip2018.komunikator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import java.util.ArrayList;
+import android.widget.Toast;
+import java.sql.SQLException;
 import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
+import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.WiadomoscAdapter;
 
 public class KonwersacjaOkno extends AppCompatActivity {
 
@@ -18,25 +19,18 @@ public class KonwersacjaOkno extends AppCompatActivity {
         setContentView(R.layout.activity_konwersacja_okno);
         k=new Konwersacja(getIntent().getStringExtra("uzytkownik"), getIntent().getStringExtra("adresat"));
         czat=findViewById(R.id.czat);
-        ArrayList<String> al1=new ArrayList<String>();
-        ArrayList<String> al2=new ArrayList<String>();
-        ArrayList<String> al3=new ArrayList<String>();
-        al1.add("qwe");
-        al1.add("rty");
-        al1.add("uio");
-        al2.add("pas");
-        al2.add("dfg");
-        al2.add("hjk");
-        al3.add("lzx");
-        al3.add("cvb");
-        al3.add("nmq");
-        ArrayAdapter<String> adapterWiadomosci = new ArrayAdapter<String>(this, R.layout.wiadomosc, R.id.tresc, al1);
-        ArrayAdapter<String> adapterLoginy = new ArrayAdapter<String>(this, R.layout.wiadomosc, R.id.login, al2);
-        ArrayAdapter<String> adapterCzas = new ArrayAdapter<String>(this, R.layout.wiadomosc, R.id.czas, al3);
-
-        czat.setAdapter(adapterCzas);
-        czat.setAdapter(adapterLoginy);
-        czat.setAdapter(adapterWiadomosci);
-        adapterWiadomosci.add("123");
+        try
+        {
+            WiadomoscAdapter adapter = new WiadomoscAdapter(this, k.wczytajWiadomosci());
+            czat.setAdapter(adapter);
+        }
+        catch (SQLException e)
+        {
+            //while (true)
+            //{
+                Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+            //}
+            // /Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+        }
     }
 }

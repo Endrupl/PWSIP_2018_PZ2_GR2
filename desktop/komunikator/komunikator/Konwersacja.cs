@@ -9,7 +9,7 @@ namespace komunikator
         {
             public string login;
             public string adresat;
-            private const string daneBazy= "Server=localhost; database=komunikator; UID=root; password=; CharSet=utf8";
+            private const string DANE_BAZY= "Server=localhost; database=komunikator; UID=root; password=; CharSet=utf8";
 
             public Konwersacja(string login, string adresat)
             {
@@ -20,7 +20,7 @@ namespace komunikator
             public static string znajdzIdUzytkownika(string login)
             {
                 string id = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -40,7 +40,7 @@ namespace komunikator
             private static string znajdzUzytkownikaPoId(string id)
             {
                 string uzytkownik=null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -60,7 +60,7 @@ namespace komunikator
             public static Uzytkownik znajdzDaneUzytkownikaPoId(int id)
             {
                 Uzytkownik uzytkownik = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -83,7 +83,7 @@ namespace komunikator
             public string wyslijWiadomosc(string tresc)
             {
                 string czasWiadomosci=null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -104,7 +104,7 @@ namespace komunikator
             public List<Wiadomosc> wczytajWiadomosci()
             {
                 List<Wiadomosc> wiadomosci = new List<Wiadomosc>(); 
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -129,7 +129,7 @@ namespace komunikator
             public bool sprawdzCzySaNoweWiadomosci()
             {
                 string wynikZapytania = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -146,7 +146,7 @@ namespace komunikator
             public static bool sprawdzCzySaNoweWiadomosci(string login)
             {
                 string wynikZapytania = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -163,7 +163,7 @@ namespace komunikator
             public List<Wiadomosc> odswiezKonwersacje()
             {
                 List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -190,7 +190,7 @@ namespace komunikator
 
             public static bool znajdzUzytkownika(string szukanyLogin)
             {
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -213,7 +213,7 @@ namespace komunikator
 
             public static void dodajKontakt(string login1, string login2)
             {
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -224,7 +224,7 @@ namespace komunikator
 
             public static void zapiszStatusUzytkownika(int idUzytkownika, string status)
             {
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -237,7 +237,7 @@ namespace komunikator
             {
                 List<Konwersacja.Kontakt> kontakty = new List<Konwersacja.Kontakt>();
                 string id = znajdzIdUzytkownika(login);
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -268,7 +268,7 @@ namespace komunikator
             {
                 string id1 = znajdzIdUzytkownika(login1);
                 string id2 = znajdzIdUzytkownika(login2);
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -282,7 +282,7 @@ namespace komunikator
             {
                 string id = znajdzIdUzytkownika(login);
                 Dictionary<string, int> nieodczytaneWiadomosci = new Dictionary<string, int>();
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
