@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 15 Kwi 2018, 21:36
--- Wersja serwera: 10.1.28-MariaDB
--- Wersja PHP: 7.1.11
+-- Czas generowania: 18 Kwi 2018, 20:38
+-- Wersja serwera: 10.1.31-MariaDB
+-- Wersja PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -51,7 +51,7 @@ INSERT INTO `kontakty` (`idKontaktu`, `idUzytkownika1`, `idUzytkownika2`) VALUES
 
 CREATE TABLE `uzytkownicy` (
   `idUzytkownika` int(5) NOT NULL,
-  `login` varchar(20) DEFAULT NULL,
+  `login` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL,
   `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL DEFAULT 'niedostępny'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -60,8 +60,8 @@ CREATE TABLE `uzytkownicy` (
 --
 
 INSERT INTO `uzytkownicy` (`idUzytkownika`, `login`, `status`) VALUES
-(1, 'uzytkownik1', 'niewidoczny'),
-(2, 'uzytkownik2', 'niewidoczny'),
+(1, 'uzytkownik1', 'zajęty'),
+(2, 'uzytkownik2', 'dostępny'),
 (3, 'uzytkownik3', 'niedostępny');
 
 -- --------------------------------------------------------
@@ -74,7 +74,7 @@ CREATE TABLE `wiadomosci` (
   `idWiadomosci` int(10) NOT NULL,
   `idWysylajacego` int(6) NOT NULL,
   `idAdresata` int(6) NOT NULL,
-  `tresc` varchar(250) DEFAULT NULL,
+  `tresc` varchar(250) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL,
   `data` datetime NOT NULL,
   `wyswietlona` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -330,26 +330,28 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 (246, 3, 1, 'test', '2018-03-31 13:58:48', 1),
 (247, 3, 1, 'test', '2018-03-31 13:58:49', 1),
 (248, 3, 1, 'test', '2018-03-31 13:58:50', 1),
-(249, 3, 2, 'test', '2018-03-31 13:58:56', 0);
+(249, 3, 2, 'test', '2018-03-31 13:58:56', 0),
+(250, 1, 2, 'test', '2018-04-16 16:07:53', 1),
+(251, 2, 1, 'test', '2018-04-17 23:07:24', 0);
 
 --
 -- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `kontakty`
+-- Indeksy dla tabeli `kontakty`
 --
 ALTER TABLE `kontakty`
   ADD PRIMARY KEY (`idKontaktu`);
 
 --
--- Indexes for table `uzytkownicy`
+-- Indeksy dla tabeli `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
   ADD PRIMARY KEY (`idUzytkownika`);
 
 --
--- Indexes for table `wiadomosci`
+-- Indeksy dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
   ADD PRIMARY KEY (`idWiadomosci`);
@@ -374,7 +376,7 @@ ALTER TABLE `uzytkownicy`
 -- AUTO_INCREMENT dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=250;
+  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
