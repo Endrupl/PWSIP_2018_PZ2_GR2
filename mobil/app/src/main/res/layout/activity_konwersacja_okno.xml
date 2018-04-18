@@ -7,7 +7,7 @@
     tools:context=".KonwersacjaOkno">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/wiadomoscTekst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -21,13 +21,14 @@
         tools:layout_editor_absoluteY="449dp" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/wyslij"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText"
+        android:layout_alignBottom="@+id/wiadomoscTekst"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="11dp"
+        android:layout_marginEnd="12dp"
         android:clickable="true"
+        android:onClick="onClickWyslij"
         app:srcCompat="@android:drawable/ic_menu_send" />
 
     <ListView
