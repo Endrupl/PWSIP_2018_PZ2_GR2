@@ -46,4 +46,35 @@ public class WyborRozmowcy extends AppCompatActivity
             Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void onClickDodajUzytkownika(View v)
+    {
+
+        //foreach(Konwersacja.Kontakt i in kontakty.Items)
+        //{
+        //    if(i.login.Equals(szukanyUzytkownik.Text))
+        //    {
+        //        MessageBox.Show("Użytkownik jest już dodany do kontaktów.", "Użytkownik jest już dodany do kontaktów", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+        //        return;
+        //    }
+        //}
+        //try
+        //{
+        //    if (!Konwersacja.znajdzUzytkownika(szukanyUzytkownik.Text))
+        //    {
+        //        MessageBox.Show("Użytkownik o podanym nicku nie istnieje. Sprawdź podany nick.", "Nie znaleziono użytkownika", MessageBoxButton.OK,
+        //                MessageBoxImage.Exclamation);
+        //    }
+        //    else
+        //    {
+        //        Konwersacja.dodajKontakt(zalogowanyUzytkownik, szukanyUzytkownik.Text);
+        //        kontakty.Items.Add(new Konwersacja.Kontakt { login = szukanyUzytkownik.Text });
+        //        szukanyUzytkownik.Text = "";
+        //    }
+        //}
+        //catch(MySqlException)
+        //{
+        //    MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+        //}
+    }
 }

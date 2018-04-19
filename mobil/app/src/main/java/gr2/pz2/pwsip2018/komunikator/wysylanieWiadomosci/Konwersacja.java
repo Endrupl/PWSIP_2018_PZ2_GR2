@@ -119,6 +119,22 @@ public class Konwersacja
         return czasWiadomosci;
     }
 
+    public ArrayList<Wiadomosc> odswiezKonwersacje() throws SQLException
+    {
+        ArrayList<Wiadomosc> wiadomosci = new ArrayList<Wiadomosc>();
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+                + znajdzIdUzytkownika(adresat) + " order by idWiadomosci");
+        while (wynik.next())
+        {
+            wiadomosci.add(new Wiadomosc(wynik.getString("tresc"), adresat, wynik.getString("data")));
+        }
+        st.executeUpdate("update wiadomosci set wyswietlona=1 where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego=" + znajdzIdUzytkownika(adresat));
+        return wiadomosci;
+    }
+
     public static class Wiadomosc
     {
         public String tresc;

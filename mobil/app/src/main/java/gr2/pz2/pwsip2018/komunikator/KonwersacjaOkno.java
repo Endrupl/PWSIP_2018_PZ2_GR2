@@ -9,8 +9,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-
 import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
 import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.WiadomoscAdapter;
 
@@ -37,7 +35,8 @@ public class KonwersacjaOkno extends AppCompatActivity {
             @Override
             public void run()
             {
-                Toast.makeText(getApplicationContext(),"Działa",Toast.LENGTH_SHORT).show();
+                dodajNoweWiadomosci();
+                odswiezacz.postDelayed(this, 1000);
             }
         };
         try
@@ -46,6 +45,7 @@ public class KonwersacjaOkno extends AppCompatActivity {
             adapter = new WiadomoscAdapter(this, wczytaneWiadomosci);
             czat.setAdapter(adapter);
             czat.setSelection(adapter.getCount()-1);
+            odswiezacz.postDelayed(dzialanie, 1000);
         }
         catch (SQLException e)
         {
@@ -67,5 +67,19 @@ public class KonwersacjaOkno extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
         }
         wiadomoscTekst.setText("");
+    }
+
+    private void dodajNoweWiadomosci()
+    {
+        try
+        {
+            ArrayList<Konwersacja.Wiadomosc> wiadomosci = k.odswiezKonwersacje();
+            for(int i=0; i<wiadomosci.size(); i++)
+            {
+                wczytaneWiadomosci.add(wiadomosci.get(i));
+            }
+            czat.setSelection(adapter.getCount()-1);
+        }
+        catch(SQLException e) { }
     }
 }
