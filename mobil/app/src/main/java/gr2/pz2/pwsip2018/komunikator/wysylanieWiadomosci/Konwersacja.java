@@ -66,10 +66,10 @@ public class Konwersacja
         return uzytkownik;
     }
 
-    public static ArrayList<String> zaladujKontakty(String login) throws SQLException
+    public static ArrayList<Kontakt> zaladujKontakty(String login) throws SQLException
     {
         przygotujDoPolaczeniaZBaza();
-        ArrayList<String> kontakty = new ArrayList<String>();
+        ArrayList<Kontakt> kontakty = new ArrayList<Kontakt>();
         String id = znajdzIdUzytkownika(login);
         Connection polaczenie = DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
         Statement st=polaczenie.createStatement();
@@ -78,11 +78,11 @@ public class Konwersacja
         {
             if(wynik.getString("idUzytkownika1").equals(id))
             {
-                kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika2")));
+                kontakty.add(new Kontakt(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika2"))));
             }
             else
             {
-                kontakty.add(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika1")));
+                kontakty.add(new Kontakt(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika1"))));
             }
         }
         return kontakty;
@@ -146,6 +146,28 @@ public class Konwersacja
             this.tresc=tresc;
             this.uzytkownik=uzytkownik;
             this.data=data;
+        }
+    }
+
+    public static class Kontakt
+    {
+        public String login;
+        public int nieodczytaneWiadomosci;
+
+        public Kontakt(String login)
+        {
+            this.login=login;
+        }
+
+        @Override
+        public String toString()
+        {
+            String kontaktInfo = login;
+            if (nieodczytaneWiadomosci > 0)
+            {
+                kontaktInfo = kontaktInfo + " (" + nieodczytaneWiadomosci + ")";
+            }
+            return kontaktInfo;
         }
     }
 }

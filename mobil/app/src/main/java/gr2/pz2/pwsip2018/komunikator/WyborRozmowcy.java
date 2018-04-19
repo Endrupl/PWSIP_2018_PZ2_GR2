@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.sql.SQLException;
@@ -16,24 +17,27 @@ public class WyborRozmowcy extends AppCompatActivity
 {
     private String zalogowanyUzytkownik = "uzytkownik1";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
     private ListView kontakty;
+    private ArrayList<Konwersacja.Kontakt> kontaktyUzytkownika;
+    private EditText szukanyUzytkownik;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybor_rozmowcy);
-        ArrayAdapter<String> adapter;
+        ArrayAdapter<Konwersacja.Kontakt> adapter;
+        szukanyUzytkownik=findViewById(R.id.szukanyUzytkownik);
         try
         {
-            ArrayList<String> kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
+            kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
             kontakty=findViewById(R.id.kontakty);
-            adapter = new ArrayAdapter<String>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
+            adapter = new ArrayAdapter<Konwersacja.Kontakt>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
             kontakty.setAdapter(adapter);
             kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener()
             {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
                 {
-                    String kontakt = (String) kontakty.getItemAtPosition(pozycja);
+                    String kontakt = ((Konwersacja.Kontakt) kontakty.getItemAtPosition(pozycja)).login;
                     Intent i=new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
                     i.putExtra("uzytkownik", zalogowanyUzytkownik);
                     i.putExtra("adresat", kontakt);
@@ -49,7 +53,15 @@ public class WyborRozmowcy extends AppCompatActivity
 
     public void onClickDodajUzytkownika(View v)
     {
-
+        Toast.makeText(getApplicationContext(),"Działa",Toast.LENGTH_SHORT).show();
+        for(int i=0; i<kontaktyUzytkownika.size(); i++)
+        {
+            if(kontaktyUzytkownika.get(i).login.equals(szukanyUzytkownik.getText()))
+            {
+                Toast.makeText(getApplicationContext(),"Użytkownik jest już dodany do kontaktów",Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         //foreach(Konwersacja.Kontakt i in kontakty.Items)
         //{
         //    if(i.login.Equals(szukanyUzytkownik.Text))
