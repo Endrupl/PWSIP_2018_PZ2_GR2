@@ -9,7 +9,7 @@ namespace komunikator
         {
             public string login;
             public string adresat;
-            private const string daneBazy = "Server=localhost; database=komunikator; UID=root; password=";
+            private const string DANE_BAZY = "Server=localhost; database=komunikator; UID=root; password=; CharSet=utf8";
 
             public Konwersacja(string login, string adresat)
             {
@@ -20,7 +20,7 @@ namespace komunikator
             public static string znajdzIdUzytkownika(string login)
             {
                 string id = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -40,7 +40,7 @@ namespace komunikator
             public static string znajdzUzytkownikaPoId(string id)
             {
                 string uzytkownik = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -57,10 +57,33 @@ namespace komunikator
                 return uzytkownik;
             }
 
+            public static Uzytkownik znajdzDaneUzytkownikaPoId(int id)
+            {
+                Uzytkownik uzytkownik = null;
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select login, status from uzytkownicy where idUzytkownika='" + id + "'";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        uzytkownik = new komunikator.Uzytkownik();
+                        uzytkownik.idUzytkownika = id;
+                        uzytkownik.login = wynik["login"].ToString();
+                        uzytkownik.status = wynik["status"].ToString();
+                    }
+                    wynik.Close();
+                    wynik.Dispose();
+                    zapytanie.Dispose();
+                }
+                return uzytkownik;
+            }
+
             public string wyslijWiadomosc(string tresc)
             {
                 string czasWiadomosci = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -81,7 +104,7 @@ namespace komunikator
             public List<Wiadomosc> wczytajWiadomosci()
             {
                 List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -110,7 +133,7 @@ namespace komunikator
             public bool sprawdzCzySaNoweWiadomosci()
             {
                 string wynikZapytania = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -127,7 +150,7 @@ namespace komunikator
             public static bool sprawdzCzySaNoweWiadomosci(string login)
             {
                 string wynikZapytania = null;
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -144,7 +167,7 @@ namespace komunikator
             public List<Wiadomosc> odswiezKonwersacje()
             {
                 List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -171,7 +194,7 @@ namespace komunikator
 
             public static bool znajdzUzytkownika(string szukanyLogin)
             {
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -194,7 +217,7 @@ namespace komunikator
 
             public static void dodajKontakt(string login1, string login2)
             {
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -203,11 +226,22 @@ namespace komunikator
                 }
             }
 
-            public static List<string> zaladujKontakty(string login)
+            public static void zapiszStatusUzytkownika(int idUzytkownika, string status)
             {
-                List<string> kontakty = new List<string>();
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "update uzytkownicy set status='" + status + "' where idUzytkownika=" + idUzytkownika;
+                    polecenie.ExecuteNonQuery();
+                }
+            }
+
+            public static List<Konwersacja.Kontakt> zaladujKontakty(string login)
+            {
+                List<Konwersacja.Kontakt> kontakty = new List<Konwersacja.Kontakt>();
                 string id = znajdzIdUzytkownika(login);
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
@@ -215,14 +249,20 @@ namespace komunikator
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
                     while (wynik.Read())
                     {
+                        Uzytkownik uzytkownik = null;
                         if (wynik["idUzytkownika1"].ToString().Equals(id))
                         {
-                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika2"].ToString()));
+                            uzytkownik = znajdzDaneUzytkownikaPoId(int.Parse(wynik["idUzytkownika2"].ToString()));
                         }
                         else
                         {
-                            kontakty.Add(znajdzUzytkownikaPoId(wynik["idUzytkownika1"].ToString()));
+                            uzytkownik = znajdzDaneUzytkownikaPoId(int.Parse(wynik["idUzytkownika1"].ToString()));
                         }
+                        kontakty.Add(new Konwersacja.Kontakt()
+                        {
+                            login = uzytkownik.login,
+                            status = uzytkownik.status != "niewidoczny" ? uzytkownik.status : "niedostępny"
+                        });
                     }
                 }
                 return kontakty;
@@ -232,7 +272,7 @@ namespace komunikator
             {
                 string id1 = znajdzIdUzytkownika(login1);
                 string id2 = znajdzIdUzytkownika(login2);
-                using (MySqlConnection polaczenie = new MySqlConnection(daneBazy))
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
@@ -242,13 +282,48 @@ namespace komunikator
                 }
             }
 
-
+            public static Dictionary<string, int> wyswietlPowiadomieniaONowychWiadomosciach(string login)
+            {
+                string id = znajdzIdUzytkownika(login);
+                Dictionary<string, int> nieodczytaneWiadomosci = new Dictionary<string, int>();
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select distinct(w1.idWysylajacego), (SELECT count(*) from wiadomosci w2 where w2.idWysylajacego = w1.idWysylajacego"
+                        + " and w2.wyswietlona = 0 and w2.idAdresata=" + id + ") as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0";
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        nieodczytaneWiadomosci.Add(znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()), int.Parse(wynik["niewyswietlone"].ToString()));
+                    }
+                }
+                return nieodczytaneWiadomosci;
+            }
 
             public class Wiadomosc
             {
                 public string tresc { get; set; }
                 public string uzytkownik { get; set; }
                 public string data { get; set; }
+            }
+
+            public class Kontakt
+            {
+                public string login { get; set; }
+                public int nieodczytaneWiadomosci { get; set; }
+                public string status { get; set; }
+
+                public override string ToString()
+                {
+                    string kontaktInfo = login;
+                    if (nieodczytaneWiadomosci > 0)
+                    {
+                        kontaktInfo = kontaktInfo + " (" + nieodczytaneWiadomosci + ")";
+                    }
+                    kontaktInfo = kontaktInfo + " " + status;
+                    return kontaktInfo;
+                }
             }
         }
     }

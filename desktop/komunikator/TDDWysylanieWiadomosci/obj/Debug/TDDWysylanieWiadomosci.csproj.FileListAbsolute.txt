@@ -6,3 +6,11 @@ C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunika
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\MySql.Data.dll
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\MySql.Data.xml
 C:\Do usunięcia w przyszłości\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.csprojResolveAssemblyReference.cache
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\TDDWysylanieWiadomosci.dll
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\TDDWysylanieWiadomosci.pdb
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\MySql.Data.dll
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\MySql.Data.xml
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.csprojResolveAssemblyReference.cache
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.dll
+C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.pdb
