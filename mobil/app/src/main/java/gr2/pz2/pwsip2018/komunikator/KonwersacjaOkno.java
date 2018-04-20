@@ -18,7 +18,7 @@ public class KonwersacjaOkno extends AppCompatActivity {
     private ArrayList<Konwersacja.Wiadomosc> wczytaneWiadomosci;
     private WiadomoscAdapter adapter;
     private Handler odswiezacz;
-    Runnable dzialanie;
+    private Runnable dzialanie;
     private ListView czat;
     private EditText wiadomoscTekst;
 

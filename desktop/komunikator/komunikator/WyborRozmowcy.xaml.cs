@@ -13,7 +13,7 @@ namespace komunikator
     /// </summary>
     public partial class WyborRozmowcy : Window
     {
-        private string zalogowanyUzytkownik = "uzytkownik3";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
+        private string zalogowanyUzytkownik = "uzytkownik1";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
         private int idzalogowanegouzytkownika = 0;
         private Timer odswiezacz;
 

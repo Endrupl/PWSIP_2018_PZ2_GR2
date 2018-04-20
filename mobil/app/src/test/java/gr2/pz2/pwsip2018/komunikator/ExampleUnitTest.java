@@ -2,8 +2,6 @@ package gr2.pz2.pwsip2018.komunikator;
 
 import org.junit.Test;
 
-import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
-
 import static org.junit.Assert.*;
 
 /**

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Konwersacja
 {
@@ -133,6 +134,63 @@ public class Konwersacja
         }
         st.executeUpdate("update wiadomosci set wyswietlona=1 where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego=" + znajdzIdUzytkownika(adresat));
         return wiadomosci;
+    }
+
+    public static Boolean znajdzUzytkownika(String szukanyLogin) throws SQLException
+    {
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select count(*) from uzytkownicy where login='" + szukanyLogin + "'");
+        while(wynik.next())
+        {
+            if (wynik.getString("count(*)").equals("0"))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void dodajKontakt(String login1, String login2) throws SQLException
+    {
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        st.executeUpdate("insert into kontakty values(null, " + znajdzIdUzytkownika(login1) + ", " + znajdzIdUzytkownika(login2) + ")");
+    }
+
+    public static Boolean sprawdzCzySaNoweWiadomosci(String login) throws SQLException
+    {
+        String wynikZapytania=null;
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select count(*) from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0");
+        while (wynik.next())
+        {
+            wynikZapytania=wynik.getString("count(*)");
+        }
+        return !wynikZapytania.equals("0");
+    }
+
+    public static HashMap<String, Integer> wyswietlPowiadomieniaONowychWiadomosciach(String login) throws SQLException
+    {
+        String id = znajdzIdUzytkownika(login);
+        HashMap<String, Integer> nieodczytaneWiadomosci = new HashMap<String, Integer>();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select distinct(w1.idWysylajacego), (SELECT count(*) from wiadomosci w2 where w2.idWysylajacego = w1.idWysylajacego"
+                + " and w2.wyswietlona = 0 and w2.idAdresata=" + id + ") as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0");
+        while (wynik.next())
+        {
+            nieodczytaneWiadomosci.put(znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), Integer.valueOf(wynik.getString("niewyswietlone")));
+        }
+        return nieodczytaneWiadomosci;
     }
 
     public static class Wiadomosc
