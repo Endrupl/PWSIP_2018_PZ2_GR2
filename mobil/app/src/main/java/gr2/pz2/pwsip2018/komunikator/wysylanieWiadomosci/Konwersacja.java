@@ -188,7 +188,7 @@ public class Konwersacja
                 + " and w2.wyswietlona = 0 and w2.idAdresata=" + id + ") as niewyswietlone from wiadomosci w1 where w1.idAdresata = " + id + " and w1.wyswietlona = 0");
         while (wynik.next())
         {
-            nieodczytaneWiadomosci.put(znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), Integer.valueOf(wynik.getString("niewyswietlone")));
+            nieodczytaneWiadomosci.put(znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), Integer.valueOf(Integer.parseInt(wynik.getString("niewyswietlone"))));
         }
         return nieodczytaneWiadomosci;
     }

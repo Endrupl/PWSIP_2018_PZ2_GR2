@@ -13,7 +13,6 @@ import android.widget.Toast;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
 
 public class WyborRozmowcy extends AppCompatActivity
@@ -63,13 +62,14 @@ public class WyborRozmowcy extends AppCompatActivity
                         }
                         else
                         {
-                            //odswiezKontaktyIWyzerujNoweWiadomosci();
+                            odswiezKontaktyIWyzerujNoweWiadomosci();
                         }
                     }
                     catch (SQLException e) { }
                     odswiezacz.postDelayed(this, 1000);
                 }
             };
+            odswiezacz.postDelayed(dzialanie, 0);
         }
         catch (SQLException e)
         {
@@ -112,20 +112,24 @@ public class WyborRozmowcy extends AppCompatActivity
         HashMap<String, Integer> zmiany = Konwersacja.wyswietlPowiadomieniaONowychWiadomosciach(zalogowanyUzytkownik);
         for(int i=0; i<kontaktyUzytkownika.size(); i++)
         {
-            for(int j=0; j<zmiany.size(); j++)
+            if(zmiany.get(kontaktyUzytkownika.get(i).login)!=null)
             {
-                //if(((Konwersacja.Kontakt)kontakty.getItemAtPosition(i)).login.equals(zmiany.))
+                kontaktyUzytkownika.get(i).nieodczytaneWiadomosci=zmiany.get(kontaktyUzytkownika.get(i).login).intValue();
             }
-            //foreach (KeyValuePair<string, int> j in zmiany)
-            //{
-            //    if (((Konwersacja.Kontakt)kontakty.Items.GetItemAt(i)).login.Equals(j.Key))
-            //    {
-            //        ((Konwersacja.Kontakt)kontakty.Items.GetItemAt(i)).nieodczytaneWiadomosci = j.Value;
-            //        break;
-            //    }
-            //    ((Konwersacja.Kontakt)kontakty.Items.GetItemAt(i)).nieodczytaneWiadomosci = 0;
-            //}
+            else
+            {
+                kontaktyUzytkownika.get(i).nieodczytaneWiadomosci=0;
+            }
         }
-        //kontakty.Items.Refresh();
+        kontakty.setAdapter(adapter);
+    }
+
+    private void odswiezKontaktyIWyzerujNoweWiadomosci()
+    {
+        for(int i=0; i<kontaktyUzytkownika.size(); i++)
+        {
+            kontaktyUzytkownika.get(i).nieodczytaneWiadomosci=0;
+        }
+        kontakty.setAdapter(adapter);
     }
 }

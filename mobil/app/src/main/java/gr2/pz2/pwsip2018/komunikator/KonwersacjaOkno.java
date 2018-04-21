@@ -1,5 +1,6 @@
 package gr2.pz2.pwsip2018.komunikator;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -81,5 +82,12 @@ public class KonwersacjaOkno extends AppCompatActivity {
             czat.setSelection(adapter.getCount()-1);
         }
         catch(SQLException e) { }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        odswiezacz.removeCallbacks(dzialanie);
+        startActivity(new Intent(KonwersacjaOkno.this, WyborRozmowcy.class));
     }
 }
