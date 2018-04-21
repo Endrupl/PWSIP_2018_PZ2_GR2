@@ -26,16 +26,13 @@ namespace komunikator
             };
             try
             {
-                foreach (Konwersacja.Kontakt i in Konwersacja.zaladujKontakty(zalogowanyUzytkownik))
-                {
-                    kontakty.Items.Add(i);
-                }
+                zaladujListeKontaktow();
                 idzalogowanegouzytkownika = int.Parse(Konwersacja.znajdzIdUzytkownika(zalogowanyUzytkownik));
                 Uzytkownik danezalogowanegouzytkownika = Konwersacja.znajdzDaneUzytkownikaPoId(idzalogowanegouzytkownika);
                 statusUzytkownika.SelectedValue = danezalogowanegouzytkownika.status;
                 otworz.IsEnabled = statusUzytkownika.SelectedValue.ToString() != "niedostępny";
             }
-            catch(MySqlException)
+            catch(MySqlException ex) 
             {
                 MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -54,9 +51,20 @@ namespace komunikator
                 {
                     Dispatcher.Invoke(odswiezKontaktyIWyzerujNoweWiadomosci);
                 }
+
+                Dispatcher.Invoke(zaladujListeKontaktow);
             }
             catch (MySqlException) { }
             catch (TaskCanceledException) { }
+        }
+
+        private void zaladujListeKontaktow()
+        {
+            kontakty.Items.Clear();
+            foreach (Konwersacja.Kontakt i in Konwersacja.zaladujKontakty(zalogowanyUzytkownik))
+            {
+                kontakty.Items.Add(i);
+            }
         }
 
         private void odswiezKontaktyIWyzerujNoweWiadomosci()
