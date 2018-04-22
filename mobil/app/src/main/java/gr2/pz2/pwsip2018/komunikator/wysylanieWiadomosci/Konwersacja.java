@@ -13,7 +13,7 @@ public class Konwersacja
 {
     public String login;
     public String adresat;
-    private static final String DANE_BAZY ="jdbc:mysql://192.168.1.16:3306/komunikator";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
+    private static final String DANE_BAZY ="jdbc:mysql://192.168.0.3:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
     private static final String UZYTKOWNIK_BAZY ="root";
     private static final String HASLO_BAZY ="";
 
@@ -67,6 +67,20 @@ public class Konwersacja
         return uzytkownik;
     }
 
+    public static Uzytkownik znajdzDaneUzytkownikaPoId(String id) throws SQLException
+    {
+        przygotujDoPolaczeniaZBaza();
+        Uzytkownik uzytkownik=null;
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select login, status from uzytkownicy where idUzytkownika='" + id + "'");
+        while (wynik.next())
+        {
+            uzytkownik=new Uzytkownik(id, wynik.getString("login"),wynik.getString("status"));
+        }
+        return uzytkownik;
+    }
+
     public static ArrayList<Kontakt> zaladujKontakty(String login) throws SQLException
     {
         przygotujDoPolaczeniaZBaza();
@@ -77,14 +91,16 @@ public class Konwersacja
         ResultSet wynik=st.executeQuery("select idUzytkownika1, idUzytkownika2 from kontakty where idUzytkownika1=" + id + " or idUzytkownika2=" + id);
         while(wynik.next())
         {
+            Uzytkownik uzytkownik=null;
             if(wynik.getString("idUzytkownika1").equals(id))
             {
-                kontakty.add(new Kontakt(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika2"))));
+                uzytkownik=znajdzDaneUzytkownikaPoId(wynik.getString("idUzytkownika2"));
             }
             else
             {
-                kontakty.add(new Kontakt(znajdzUzytkownikaPoId(wynik.getString("idUzytkownika1"))));
+                uzytkownik=znajdzDaneUzytkownikaPoId(wynik.getString("idUzytkownika1"));
             }
+            kontakty.add(new Kontakt(uzytkownik.login, !"niewidoczny".equals(uzytkownik.status) ? uzytkownik.status : "niedostępny"));
         }
         return kontakty;
     }
@@ -118,6 +134,17 @@ public class Konwersacja
             czasWiadomosci=czasSerwera.getString("data");
         }
         return czasWiadomosci;
+    }
+
+    public static void zapiszStatusUzytkownika(String idUzytkownika, String status) throws SQLException
+    {
+        String czasWiadomosci=null;
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        st.executeUpdate("update uzytkownicy set status='"+status+"' where idUzytkownika="+idUzytkownika);
+
+
     }
 
     public ArrayList<Wiadomosc> odswiezKonwersacje() throws SQLException
@@ -211,10 +238,12 @@ public class Konwersacja
     {
         public String login;
         public int nieodczytaneWiadomosci;
+        public String status;
 
-        public Kontakt(String login)
+        public Kontakt(String login, String status)
         {
             this.login=login;
+            this.status=status;
         }
 
         @Override
@@ -225,7 +254,20 @@ public class Konwersacja
             {
                 kontaktInfo = kontaktInfo + " (" + nieodczytaneWiadomosci + ")";
             }
+            kontaktInfo = kontaktInfo + " " + status;
             return kontaktInfo;
+        }
+    }
+    public static class Uzytkownik
+    {
+        public String id;
+        public String login;
+        public String status;
+        public Uzytkownik(String id, String login, String status)
+        {
+            this.id=id;
+            this.login=login;
+            this.status=status;
         }
     }
 }

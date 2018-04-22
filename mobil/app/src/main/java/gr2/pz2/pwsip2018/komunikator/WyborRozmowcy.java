@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
 
-public class WyborRozmowcy extends AppCompatActivity
+public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
     private String zalogowanyUzytkownik = "uzytkownik1";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
+    private String idzalogowanegouzytkownika = "";
     private ListView kontakty;
     private ArrayList<Konwersacja.Kontakt> kontaktyUzytkownika;
     private EditText szukanyUzytkownik;
@@ -32,22 +33,18 @@ public class WyborRozmowcy extends AppCompatActivity
         szukanyUzytkownik=findViewById(R.id.szukanyUzytkownik);
         try
         {
-            kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
-            kontakty=findViewById(R.id.kontakty);
-            adapter = new ArrayAdapter<Konwersacja.Kontakt>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
-            kontakty.setAdapter(adapter);
-            kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener()
-            {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
-                {
-                    String kontakt = ((Konwersacja.Kontakt) kontakty.getItemAtPosition(pozycja)).login;
-                    Intent i=new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
-                    i.putExtra("uzytkownik", zalogowanyUzytkownik);
-                    i.putExtra("adresat", kontakt);
-                    startActivity(i);
-                }
-            });
+            zaladujkontakty();
+            android.widget.Spinner spinnerStatus = (android.widget.Spinner)findViewById(R.id.status);
+            ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        R.array.statusy, android.R.layout.simple_spinner_item);
+
+    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    spinnerStatus.setAdapter(adapter);
+    idzalogowanegouzytkownika=Konwersacja.znajdzIdUzytkownika(zalogowanyUzytkownik);
+    Konwersacja.Uzytkownik danezalogowanegouzytkownika=Konwersacja.znajdzDaneUzytkownikaPoId(idzalogowanegouzytkownika);
+    spinnerStatus.setSelection(adapter.getPosition(danezalogowanegouzytkownika.status));
+    spinnerStatus.setOnItemSelectedListener(this);
+
             odswiezacz=new Handler();
             dzialanie=new Runnable()
             {
@@ -64,6 +61,7 @@ public class WyborRozmowcy extends AppCompatActivity
                         {
                             odswiezKontaktyIWyzerujNoweWiadomosci();
                         }
+                        zaladujkontakty();
                     }
                     catch (SQLException e) { }
                     odswiezacz.postDelayed(this, 1000);
@@ -96,7 +94,9 @@ public class WyborRozmowcy extends AppCompatActivity
             else
             {
                 Konwersacja.dodajKontakt(zalogowanyUzytkownik, szukanyUzytkownik.getText().toString());
-                kontaktyUzytkownika.add(new Konwersacja.Kontakt(szukanyUzytkownik.getText().toString()));
+                String idUzytkownika=Konwersacja.znajdzIdUzytkownika(szukanyUzytkownik.getText().toString());
+                Konwersacja.Uzytkownik uzytkownik=Konwersacja.znajdzDaneUzytkownikaPoId(idUzytkownika);
+                kontaktyUzytkownika.add(new Konwersacja.Kontakt(uzytkownik.id, uzytkownik.status));
                 kontakty.setAdapter(adapter);
                 szukanyUzytkownik.setText("");
             }
@@ -105,6 +105,30 @@ public class WyborRozmowcy extends AppCompatActivity
         {
             Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void zaladujkontakty()
+    {
+        try {
+            kontaktyUzytkownika = Konwersacja.zaladujKontakty(zalogowanyUzytkownik);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        kontakty=findViewById(R.id.kontakty);
+        adapter = new ArrayAdapter<Konwersacja.Kontakt>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
+        kontakty.setAdapter(adapter);
+        kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
+            {
+                String kontakt = ((Konwersacja.Kontakt) kontakty.getItemAtPosition(pozycja)).login;
+                Intent i=new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
+                i.putExtra("uzytkownik", zalogowanyUzytkownik);
+                i.putExtra("adresat", kontakt);
+                startActivity(i);
+            }
+        });
     }
 
     private void poinformujONowychWiadomosciach() throws SQLException
@@ -131,5 +155,19 @@ public class WyborRozmowcy extends AppCompatActivity
             kontaktyUzytkownika.get(i).nieodczytaneWiadomosci=0;
         }
         kontakty.setAdapter(adapter);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        try {
+            Konwersacja.zapiszStatusUzytkownika(idzalogowanegouzytkownika, adapterView.getItemAtPosition(i).toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }
