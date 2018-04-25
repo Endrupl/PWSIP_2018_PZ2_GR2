@@ -13,7 +13,7 @@ public class Konwersacja
 {
     public String login;
     public String adresat;
-    private static final String DANE_BAZY ="jdbc:mysql://192.168.0.3:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
+    private static final String DANE_BAZY ="jdbc:mysql://192.168.1.16:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
     private static final String UZYTKOWNIK_BAZY ="root";
     private static final String HASLO_BAZY ="";
 
