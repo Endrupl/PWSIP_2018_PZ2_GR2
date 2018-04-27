@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 18 Kwi 2018, 20:38
+-- Czas generowania: 27 Kwi 2018, 10:38
 -- Wersja serwera: 10.1.31-MariaDB
 -- Wersja PHP: 7.2.4
 
@@ -39,9 +39,9 @@ CREATE TABLE `kontakty` (
 --
 
 INSERT INTO `kontakty` (`idKontaktu`, `idUzytkownika1`, `idUzytkownika2`) VALUES
-(3, 1, 3),
-(4, 2, 1),
-(6, 3, 2);
+(6, 3, 2),
+(9, 1, 3),
+(10, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -60,9 +60,9 @@ CREATE TABLE `uzytkownicy` (
 --
 
 INSERT INTO `uzytkownicy` (`idUzytkownika`, `login`, `status`) VALUES
-(1, 'uzytkownik1', 'zajęty'),
+(1, 'uzytkownik1', 'dostępny'),
 (2, 'uzytkownik2', 'dostępny'),
-(3, 'uzytkownik3', 'niedostępny');
+(3, 'uzytkownik3', 'dostępny');
 
 -- --------------------------------------------------------
 
@@ -332,7 +332,67 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 (248, 3, 1, 'test', '2018-03-31 13:58:50', 1),
 (249, 3, 2, 'test', '2018-03-31 13:58:56', 0),
 (250, 1, 2, 'test', '2018-04-16 16:07:53', 1),
-(251, 2, 1, 'test', '2018-04-17 23:07:24', 0);
+(251, 2, 1, 'test', '2018-04-17 23:07:24', 1),
+(252, 1, 3, 'test', '2018-04-18 23:16:28', 1),
+(253, 1, 3, 'test', '2018-04-19 19:03:50', 1),
+(254, 3, 1, 'test test test', '2018-04-19 19:05:03', 1),
+(255, 1, 3, '1', '2018-04-19 19:05:16', 1),
+(256, 1, 3, '', '2018-04-19 19:05:20', 1),
+(257, 3, 1, '2', '2018-04-19 19:05:27', 1),
+(258, 1, 3, '3', '2018-04-19 19:05:34', 1),
+(259, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
+(260, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
+(261, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
+(262, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
+(263, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
+(264, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
+(265, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
+(266, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
+(267, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
+(268, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
+(269, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
+(270, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
+(271, 3, 1, 'test', '2018-04-20 11:48:20', 1),
+(272, 1, 2, 'gdk', '2018-04-20 12:02:06', 1),
+(273, 1, 2, 'TEST', '2018-04-20 12:37:12', 1),
+(274, 1, 2, 'TEST', '2018-04-20 12:40:50', 1),
+(275, 1, 2, 'TEST', '2018-04-21 11:53:59', 1),
+(276, 2, 1, 'test', '2018-04-21 12:16:09', 1),
+(277, 2, 1, 'test', '2018-04-21 12:40:41', 1),
+(278, 2, 1, 'test', '2018-04-21 12:40:50', 1),
+(279, 2, 1, 'test', '2018-04-21 12:40:52', 1),
+(280, 2, 1, 'test', '2018-04-21 12:40:53', 1),
+(281, 2, 1, 'test', '2018-04-21 12:55:40', 1),
+(282, 2, 1, 'test', '2018-04-21 12:57:11', 1),
+(283, 2, 1, 'test', '2018-04-21 12:57:20', 1),
+(284, 2, 1, 'test', '2018-04-21 12:58:12', 1),
+(285, 2, 1, 'test', '2018-04-21 12:58:28', 1),
+(286, 2, 1, 'test', '2018-04-21 12:58:40', 1),
+(287, 2, 1, 'test', '2018-04-21 13:05:34', 1),
+(288, 2, 1, 'test', '2018-04-21 13:05:39', 1),
+(289, 2, 1, 'test', '2018-04-21 13:05:44', 1),
+(290, 2, 1, 'test', '2018-04-21 13:05:49', 1),
+(291, 2, 1, 'test', '2018-04-21 13:05:52', 1),
+(292, 2, 1, 'ęóąśłżźćń', '2018-04-21 13:07:37', 1),
+(293, 2, 1, 'test', '2018-04-21 13:08:02', 1),
+(294, 2, 1, 'test', '2018-04-21 13:10:16', 1),
+(295, 2, 1, 'test', '2018-04-21 13:18:14', 1),
+(296, 2, 1, 'test', '2018-04-21 13:31:20', 1),
+(297, 2, 1, 'test', '2018-04-21 13:31:27', 1),
+(298, 2, 1, 'test', '2018-04-21 13:31:30', 1),
+(299, 2, 1, 'test', '2018-04-21 13:31:33', 1),
+(300, 2, 1, 'test', '2018-04-21 13:31:37', 1),
+(301, 2, 1, 'coś innego', '2018-04-21 13:33:07', 1),
+(302, 2, 1, 'test', '2018-04-21 13:33:24', 0),
+(303, 2, 1, 'test', '2018-04-21 13:33:33', 0),
+(304, 1, 2, 'TEST', '2018-04-21 14:23:47', 1),
+(305, 1, 2, 'TEST', '2018-04-25 18:20:50', 1),
+(306, 3, 1, 'test', '2018-04-25 23:14:56', 1),
+(307, 3, 1, 'test', '2018-04-25 23:15:33', 0),
+(308, 3, 1, 'test', '2018-04-25 23:15:37', 0),
+(309, 3, 1, 'test', '2018-04-25 23:15:39', 0),
+(310, 3, 1, 'test', '2018-04-25 23:15:41', 0),
+(311, 3, 1, 'test', '2018-04-25 23:15:43', 0);
 
 --
 -- Indeksy dla zrzutów tabel
@@ -342,7 +402,9 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 -- Indeksy dla tabeli `kontakty`
 --
 ALTER TABLE `kontakty`
-  ADD PRIMARY KEY (`idKontaktu`);
+  ADD PRIMARY KEY (`idKontaktu`),
+  ADD KEY `idUzytkownika1` (`idUzytkownika1`),
+  ADD KEY `idUzytkownika2` (`idUzytkownika2`);
 
 --
 -- Indeksy dla tabeli `uzytkownicy`
@@ -354,7 +416,9 @@ ALTER TABLE `uzytkownicy`
 -- Indeksy dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  ADD PRIMARY KEY (`idWiadomosci`);
+  ADD PRIMARY KEY (`idWiadomosci`),
+  ADD KEY `idWysylajacego` (`idWysylajacego`),
+  ADD KEY `idAdresata` (`idAdresata`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -364,7 +428,7 @@ ALTER TABLE `wiadomosci`
 -- AUTO_INCREMENT dla tabeli `kontakty`
 --
 ALTER TABLE `kontakty`
-  MODIFY `idKontaktu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idKontaktu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
@@ -376,7 +440,25 @@ ALTER TABLE `uzytkownicy`
 -- AUTO_INCREMENT dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
+  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312;
+
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `kontakty`
+--
+ALTER TABLE `kontakty`
+  ADD CONSTRAINT `kontakty_ibfk_1` FOREIGN KEY (`idUzytkownika1`) REFERENCES `uzytkownicy` (`idUzytkownika`),
+  ADD CONSTRAINT `kontakty_ibfk_2` FOREIGN KEY (`idUzytkownika2`) REFERENCES `uzytkownicy` (`idUzytkownika`);
+
+--
+-- Ograniczenia dla tabeli `wiadomosci`
+--
+ALTER TABLE `wiadomosci`
+  ADD CONSTRAINT `wiadomosci_ibfk_1` FOREIGN KEY (`idWysylajacego`) REFERENCES `uzytkownicy` (`idUzytkownika`),
+  ADD CONSTRAINT `wiadomosci_ibfk_2` FOREIGN KEY (`idAdresata`) REFERENCES `uzytkownicy` (`idUzytkownika`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
