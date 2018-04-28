@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using komunikator.wysylanieWiadomosci;
 using MySql.Data.MySqlClient;
+using komunikator;
 
 namespace TDDWysylanieWiadomosci
 {
@@ -97,6 +98,30 @@ namespace TDDWysylanieWiadomosci
                 wynikZapytania = odczytZapytania["data"].ToString();
             }
             Assert.AreEqual(wynikZapytania, wynik);
+        }
+
+        [TestMethod]
+        public void znajdzDaneUzytkownikaPoIdTest()
+        {
+            Uzytkownik u1 = Konwersacja.znajdzDaneUzytkownikaPoId(1);
+            Assert.IsNotNull(u1);
+            Assert.AreEqual(1, u1.idUzytkownika);
+            Assert.AreEqual("uzytkownik1", u1.login);
+        }
+
+        [TestMethod]
+        public void zapiszStatusUzytkownikaTest()
+        {
+            
+            Konwersacja.zapiszStatusUzytkownika(1, "dostępny");
+            Uzytkownik u1 = Konwersacja.znajdzDaneUzytkownikaPoId(1);
+            Assert.IsNotNull(u1);
+            Assert.AreEqual("dostępny", u1.status);
+
+            Konwersacja.zapiszStatusUzytkownika(1, "niedostępny");
+            u1 = Konwersacja.znajdzDaneUzytkownikaPoId(1);
+            Assert.IsNotNull(u1);
+            Assert.AreEqual("niedostępny", u1.status);
         }
     }
 }

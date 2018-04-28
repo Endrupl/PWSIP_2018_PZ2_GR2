@@ -14,3 +14,13 @@ C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator
 C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.csprojResolveAssemblyReference.cache
 C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.dll
 C:\Do_usuniecia_w_przyszlosci\Komunikator\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.pdb
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\TDDWysylanieWiadomosci.dll
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\TDDWysylanieWiadomosci.pdb
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\komunikator.exe
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\komunikator.pdb
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\MySql.Data.xml
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\bin\Debug\pl\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.csprojResolveAssemblyReference.cache
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.dll
+C:\Users\Bartek\Documents\git\PWSIP_2018_PZ2_GR2\desktop\komunikator\TDDWysylanieWiadomosci\obj\Debug\TDDWysylanieWiadomosci.pdb

@@ -57,6 +57,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Uzytkownik.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\komunikator\komunikator.csproj">
+      <Project>{cb1173c9-90e9-45ad-9f6c-8c69aeb47ba1}</Project>
+      <Name>komunikator</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

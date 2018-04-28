@@ -67,4 +67,5 @@ public class ExampleInstrumentedTest {
         Boolean wynik = Konwersacja.sprawdzCzySaNoweWiadomosci("uzytkownik2");
         assertEquals(true, wynik);
     }
+
 }

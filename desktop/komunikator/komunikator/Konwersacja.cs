@@ -5,7 +5,7 @@ namespace komunikator
 {
     namespace wysylanieWiadomosci
     {
-        class Konwersacja
+        public class Konwersacja
         {
             public string login;
             public string adresat;
@@ -37,7 +37,7 @@ namespace komunikator
                 return id;
             }
 
-            private static string znajdzUzytkownikaPoId(string id)
+            public static string znajdzUzytkownikaPoId(string id)
             {
                 string uzytkownik=null;
                 using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))

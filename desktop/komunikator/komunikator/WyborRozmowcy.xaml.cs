@@ -60,10 +60,21 @@ namespace komunikator
 
         private void zaladujListeKontaktow()
         {
+            Konwersacja.Kontakt zaznaczonyKontakt = kontakty.SelectedItem as Konwersacja.Kontakt;
             kontakty.Items.Clear();
             foreach (Konwersacja.Kontakt i in Konwersacja.zaladujKontakty(zalogowanyUzytkownik))
             {
                 kontakty.Items.Add(i);
+            }
+            if (zaznaczonyKontakt != null)
+            {
+                foreach (Konwersacja.Kontakt i in kontakty.Items)
+                {
+                    if (i.login == zaznaczonyKontakt.login)
+                    {
+                        kontakty.SelectedItem = i;
+                    }
+                }
             }
         }
 
