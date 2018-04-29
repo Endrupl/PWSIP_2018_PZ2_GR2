@@ -122,11 +122,15 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
             {
-                String kontakt = ((Konwersacja.Kontakt) kontakty.getItemAtPosition(pozycja)).login;
-                Intent i=new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
-                i.putExtra("uzytkownik", zalogowanyUzytkownik);
-                i.putExtra("adresat", kontakt);
-                startActivity(i);
+                android.widget.Spinner spinnerStatus = (android.widget.Spinner)findViewById(R.id.status);
+                Konwersacja.Kontakt wybranyKontakt = ((Konwersacja.Kontakt) kontakty.getItemAtPosition(pozycja));
+                if(spinnerStatus.getSelectedItem().toString().compareTo("niedostępny")!=0)
+                {
+                    Intent i = new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
+                    i.putExtra("uzytkownik", zalogowanyUzytkownik);
+                    i.putExtra("adresat", wybranyKontakt.login);
+                    startActivity(i);
+                }
             }
         });
     }
