@@ -68,4 +68,28 @@ public class ExampleInstrumentedTest {
         assertEquals(true, wynik);
     }
 
+    @Test
+    public void znajdzDaneUzytkownikaPoIdTest() throws SQLException
+    {
+        Konwersacja.Uzytkownik u1 = Konwersacja.znajdzDaneUzytkownikaPoId("1");
+        assertNotNull(u1);
+        assertEquals("1", u1.id);
+        assertEquals("uzytkownik1", u1.login);
+    }
+
+    @Test
+    public void zapiszStatusUzytkownikaTest() throws SQLException
+    {
+
+        Konwersacja.zapiszStatusUzytkownika("1", "dostępny");
+        Konwersacja.Uzytkownik u1 = Konwersacja.znajdzDaneUzytkownikaPoId("1");
+        assertNotNull(u1);
+        assertEquals("dostępny", u1.status);
+
+        Konwersacja.zapiszStatusUzytkownika("1", "niedostępny");
+        u1 = Konwersacja.znajdzDaneUzytkownikaPoId("1");
+        assertNotNull(u1);
+        assertEquals("niedostępny", u1.status);
+    }
+
 }
