@@ -53,6 +53,7 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
                 {
                     try
                     {
+                        zaladujkontakty();
                         if (Konwersacja.sprawdzCzySaNoweWiadomosci(zalogowanyUzytkownik))
                         {
                             poinformujONowychWiadomosciach();
@@ -61,7 +62,6 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
                         {
                             odswiezKontaktyIWyzerujNoweWiadomosci();
                         }
-                        zaladujkontakty();
                     }
                     catch (SQLException e) { }
                     odswiezacz.postDelayed(this, 1000);

@@ -43,6 +43,8 @@ namespace komunikator
         {
             try
             {
+                Dispatcher.Invoke(zaladujListeKontaktow);
+
                 if (Konwersacja.sprawdzCzySaNoweWiadomosci(zalogowanyUzytkownik))
                 {
                     Dispatcher.Invoke(poinformujONowychWiadomosciach);
@@ -51,8 +53,6 @@ namespace komunikator
                 {
                     Dispatcher.Invoke(odswiezKontaktyIWyzerujNoweWiadomosci);
                 }
-
-                Dispatcher.Invoke(zaladujListeKontaktow);
             }
             catch (MySqlException) { }
             catch (TaskCanceledException) { }
@@ -85,6 +85,7 @@ namespace komunikator
                 i.nieodczytaneWiadomosci = 0;
             }
             kontakty.Items.Refresh();
+
         }
 
         private void poinformujONowychWiadomosciach()
