@@ -64,12 +64,21 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
                         }
                     }
                     catch (SQLException e) { }
+                    catch (Exception e){}
                     odswiezacz.postDelayed(this, 1000);
                 }
             };
             odswiezacz.postDelayed(dzialanie, 0);
         }
         catch (SQLException e)
+        {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+        }
+        catch(NullPointerException e)
+        {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+        }
+        catch (Exception e)
         {
             Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
         }
@@ -114,25 +123,33 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        kontakty=findViewById(R.id.kontakty);
-        adapter = new ArrayAdapter<Konwersacja.Kontakt>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
-        kontakty.setAdapter(adapter);
-        kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        try
         {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id)
-            {
-                android.widget.Spinner spinnerStatus = (android.widget.Spinner)findViewById(R.id.status);
-                Konwersacja.Kontakt wybranyKontakt = ((Konwersacja.Kontakt) kontakty.getItemAtPosition(pozycja));
-                if(spinnerStatus.getSelectedItem().toString().compareTo("niedostępny")!=0)
-                {
-                    Intent i = new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
-                    i.putExtra("uzytkownik", zalogowanyUzytkownik);
-                    i.putExtra("adresat", wybranyKontakt.login);
-                    startActivity(i);
+            kontakty = findViewById(R.id.kontakty);
+            adapter = new ArrayAdapter<Konwersacja.Kontakt>(this, R.layout.layoutwm, R.id.wm, kontaktyUzytkownika);
+            kontakty.setAdapter(adapter);
+            kontakty.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int pozycja, long id) {
+                    android.widget.Spinner spinnerStatus = (android.widget.Spinner) findViewById(R.id.status);
+                    Konwersacja.Kontakt wybranyKontakt = ((Konwersacja.Kontakt) kontakty.getItemAtPosition(pozycja));
+                    if (spinnerStatus.getSelectedItem().toString().compareTo("niedostępny") != 0) {
+                        Intent i = new Intent(WyborRozmowcy.this, KonwersacjaOkno.class);
+                        i.putExtra("uzytkownik", zalogowanyUzytkownik);
+                        i.putExtra("adresat", wybranyKontakt.login);
+                        startActivity(i);
+                    }
                 }
-            }
-        });
+            });
+        }
+        catch (NullPointerException e)
+        {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void poinformujONowychWiadomosciach() throws SQLException

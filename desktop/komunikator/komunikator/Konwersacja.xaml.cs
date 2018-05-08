@@ -83,10 +83,9 @@ namespace komunikator
             }
         }
 
-        private void powrot_Click(object sender, RoutedEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            WyborRozmowcy oknoPowrot = new WyborRozmowcy();
-            oknoPowrot.Show();
+            odswiezacz.Dispose();
         }
     }
 }
