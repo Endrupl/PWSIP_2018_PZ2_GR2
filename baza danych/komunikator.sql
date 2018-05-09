@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 09 Maj 2018, 11:40
+-- Czas generowania: 09 Maj 2018, 12:01
 -- Wersja serwera: 5.6.21
 -- Wersja PHP: 5.6.3
 
@@ -369,7 +369,7 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 -- Indexes for table `kontakty`
 --
 ALTER TABLE `kontakty`
- ADD PRIMARY KEY (`idKontaktu`);
+ ADD PRIMARY KEY (`idKontaktu`), ADD KEY `idUzytkownika1` (`idUzytkownika1`), ADD KEY `idUzytkownika2` (`idUzytkownika2`);
 
 --
 -- Indexes for table `uzytkownicy`
@@ -381,7 +381,7 @@ ALTER TABLE `uzytkownicy`
 -- Indexes for table `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
- ADD PRIMARY KEY (`idWiadomosci`);
+ ADD PRIMARY KEY (`idWiadomosci`), ADD KEY `idWysylajacego` (`idWysylajacego`), ADD KEY `idAdresata` (`idAdresata`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -402,6 +402,25 @@ MODIFY `idUzytkownika` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 ALTER TABLE `wiadomosci`
 MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=279;
+--
+-- Ograniczenia dla zrzutów tabel
+--
+
+--
+-- Ograniczenia dla tabeli `kontakty`
+--
+ALTER TABLE `kontakty`
+ADD CONSTRAINT `kontakty_ibfk_1` FOREIGN KEY (`idUzytkownika1`) REFERENCES `uzytkownicy` (`idUzytkownika`),
+ADD CONSTRAINT `kontakty_ibfk_2` FOREIGN KEY (`idUzytkownika2`) REFERENCES `uzytkownicy` (`idUzytkownika`);
+
+--
+-- Ograniczenia dla tabeli `wiadomosci`
+--
+ALTER TABLE `wiadomosci`
+ADD CONSTRAINT `wiadomosci_ibfk_1` FOREIGN KEY (`idWysylajacego`) REFERENCES `uzytkownicy` (`idUzytkownika`),
+ADD CONSTRAINT `wiadomosci_ibfk_2` FOREIGN KEY (`idWysylajacego`) REFERENCES `uzytkownicy` (`idUzytkownika`),
+ADD CONSTRAINT `wiadomosci_ibfk_3` FOREIGN KEY (`idAdresata`) REFERENCES `uzytkownicy` (`idUzytkownika`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
