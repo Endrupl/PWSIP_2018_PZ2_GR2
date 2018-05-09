@@ -87,5 +87,16 @@ namespace komunikator
         {
             odswiezacz.Dispose();
         }
+
+        private void zaladujWiecej_Click(object sender, RoutedEventArgs e)
+        {
+            List<Konwersacja.Wiadomosc> wiadomosci = k.zaladujWczesniejszeWiadomosci();
+            int i = 0;
+            foreach (Konwersacja.Wiadomosc w in wiadomosci)
+            {
+                czat.Items.Insert(i, w);
+                i++;
+            }
+        }
     }
 }

@@ -10,6 +10,8 @@ namespace komunikator
             public string login;
             public string adresat;
             private const string DANE_BAZY= "Server=localhost; database=komunikator; UID=root; password=; CharSet=utf8";
+            private int liczbaWszystkichWiadomosciNaPoczatku;
+            private int zaladowaneWiadomosci;
 
             public Konwersacja(string login, string adresat)
             {
@@ -103,24 +105,44 @@ namespace komunikator
 
             public List<Wiadomosc> wczytajWiadomosci()
             {
-                List<Wiadomosc> wiadomosci = new List<Wiadomosc>(); 
+                List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
+                int liczbaWiadomosci=0;
                 using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
-                    polecenie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego="+znajdzIdUzytkownika(login)+" and idAdresata="
-                        +znajdzIdUzytkownika(adresat)+") or (idWysylajacego="+znajdzIdUzytkownika(adresat)+" and idAdresata="+znajdzIdUzytkownika(login)
-                        +") order by idWiadomosci";
+                    polecenie.CommandText = "SELECT count(*) from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata=" 
+                        + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login) 
+                        + ") order by idWiadomosci";
                     MySqlDataReader wynik = polecenie.ExecuteReader();
                     while(wynik.Read())
                     {
-                        wiadomosci.Add(new Wiadomosc { uzytkownik = znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()), data = wynik["data"].ToString(),
-                            tresc = wynik["tresc"].ToString() });
+                        liczbaWiadomosci = int.Parse(wynik["count(*)"].ToString());
+                    }
+                    liczbaWszystkichWiadomosciNaPoczatku = liczbaWiadomosci;
+                }
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                        + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                        + ") order by idWiadomosci limit 10 offset " + (liczbaWiadomosci - 10).ToString();
+                    zaladowaneWiadomosci = 10;
+                    MySqlDataReader wynik = polecenie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        wiadomosci.Add(new Wiadomosc
+                        {
+                            uzytkownik = znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()),
+                            data = wynik["data"].ToString(),
+                            tresc = wynik["tresc"].ToString()
+                        });
                     }
                     wynik.Close();
                     MySqlCommand polecenieZmianyStatusuWiadomosci = polaczenie.CreateCommand();
-                    polecenieZmianyStatusuWiadomosci.CommandText = "update wiadomosci set wyswietlona=1 where idWysylajacego=" + znajdzIdUzytkownika(adresat) 
-                        + " and idAdresata="+ znajdzIdUzytkownika(login);
+                    polecenieZmianyStatusuWiadomosci.CommandText = "update wiadomosci set wyswietlona=1 where idWysylajacego=" + znajdzIdUzytkownika(adresat)
+                        + " and idAdresata=" + znajdzIdUzytkownika(login);
                     polecenieZmianyStatusuWiadomosci.ExecuteReader();
                 }
                 return wiadomosci;
@@ -312,6 +334,31 @@ namespace komunikator
                     }
                 }
                 return nieodczytaneWiadomosci;
+            }
+
+            public List<Wiadomosc> zaladujWczesniejszeWiadomosci()
+            {
+                List<Wiadomosc> wiadomosci = new List<Wiadomosc>();
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zaladowaneWiadomosci += 10;
+                    zapytanie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata=" 
+                        + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login) 
+                        + ") order by idWiadomosci limit 10 offset " + (liczbaWszystkichWiadomosciNaPoczatku - zaladowaneWiadomosci).ToString();
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
+                    {
+                        wiadomosci.Add(new Wiadomosc
+                        {
+                            uzytkownik = znajdzUzytkownikaPoId(wynik["idWysylajacego"].ToString()),
+                            data = wynik["data"].ToString(),
+                            tresc = wynik["tresc"].ToString()
+                        });
+                    }
+                }
+                return wiadomosci;
             }
 
             public class Wiadomosc

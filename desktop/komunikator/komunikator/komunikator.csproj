@@ -56,13 +56,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logowanie.xaml.cs">
+      <DependentUpon>Logowanie.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="rejestracja.xaml.cs">
+      <DependentUpon>rejestracja.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Uzytkownik.cs" />
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WyborRozmowcy.xaml.cs">
       <DependentUpon>WyborRozmowcy.xaml</DependentUpon>
     </Compile>
     <Page Include="Konwersacja.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Logowanie.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -80,6 +93,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="rejestracja.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Window1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WyborRozmowcy.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
