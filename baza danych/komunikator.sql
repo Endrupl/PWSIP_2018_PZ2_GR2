@@ -1,22 +1,20 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
--- https://www.phpmyadmin.net/
+-- version 4.2.11
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Czas generowania: 27 Kwi 2018, 10:38
--- Wersja serwera: 10.1.31-MariaDB
--- Wersja PHP: 7.2.4
+-- Czas generowania: 09 Maj 2018, 11:40
+-- Wersja serwera: 5.6.21
+-- Wersja PHP: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Baza danych: `komunikator`
@@ -28,20 +26,20 @@ SET time_zone = "+00:00";
 -- Struktura tabeli dla tabeli `kontakty`
 --
 
-CREATE TABLE `kontakty` (
-  `idKontaktu` int(3) NOT NULL,
+CREATE TABLE IF NOT EXISTS `kontakty` (
+`idKontaktu` int(3) NOT NULL,
   `idUzytkownika1` int(5) NOT NULL,
   `idUzytkownika2` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Zrzut danych tabeli `kontakty`
 --
 
 INSERT INTO `kontakty` (`idKontaktu`, `idUzytkownika1`, `idUzytkownika2`) VALUES
-(6, 3, 2),
-(9, 1, 3),
-(10, 1, 2);
+(3, 1, 3),
+(4, 2, 1),
+(6, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -49,20 +47,22 @@ INSERT INTO `kontakty` (`idKontaktu`, `idUzytkownika1`, `idUzytkownika2`) VALUES
 -- Struktura tabeli dla tabeli `uzytkownicy`
 --
 
-CREATE TABLE `uzytkownicy` (
-  `idUzytkownika` int(5) NOT NULL,
-  `login` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL,
-  `status` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL DEFAULT 'niedostępny'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `uzytkownicy` (
+`idUzytkownika` int(5) NOT NULL,
+  `login` varchar(20) COLLATE utf8_polish_ci DEFAULT NULL,
+  `status` varchar(20) COLLATE utf8_polish_ci NOT NULL DEFAULT 'niedostępny',
+  `Email` varchar(50) COLLATE utf8_polish_ci NOT NULL,
+  `haslo` varchar(50) COLLATE utf8_polish_ci NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `uzytkownicy`
 --
 
-INSERT INTO `uzytkownicy` (`idUzytkownika`, `login`, `status`) VALUES
-(1, 'uzytkownik1', 'dostępny'),
-(2, 'uzytkownik2', 'dostępny'),
-(3, 'uzytkownik3', 'dostępny');
+INSERT INTO `uzytkownicy` (`idUzytkownika`, `login`, `status`, `Email`, `haslo`) VALUES
+(1, 'uzytkownik1', 'zajęty', '', 'test'),
+(2, 'uzytkownik2', 'dostępny', '', ''),
+(3, 'uzytkownik3', 'dostępny', '', '');
 
 -- --------------------------------------------------------
 
@@ -70,14 +70,14 @@ INSERT INTO `uzytkownicy` (`idUzytkownika`, `login`, `status`) VALUES
 -- Struktura tabeli dla tabeli `wiadomosci`
 --
 
-CREATE TABLE `wiadomosci` (
-  `idWiadomosci` int(10) NOT NULL,
+CREATE TABLE IF NOT EXISTS `wiadomosci` (
+`idWiadomosci` int(10) NOT NULL,
   `idWysylajacego` int(6) NOT NULL,
   `idAdresata` int(6) NOT NULL,
-  `tresc` varchar(250) CHARACTER SET utf8 COLLATE utf8_polish_ci DEFAULT NULL,
+  `tresc` varchar(250) COLLATE utf8_polish_ci DEFAULT NULL,
   `data` datetime NOT NULL,
   `wyswietlona` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=279 DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Zrzut danych tabeli `wiadomosci`
@@ -330,95 +330,58 @@ INSERT INTO `wiadomosci` (`idWiadomosci`, `idWysylajacego`, `idAdresata`, `tresc
 (246, 3, 1, 'test', '2018-03-31 13:58:48', 1),
 (247, 3, 1, 'test', '2018-03-31 13:58:49', 1),
 (248, 3, 1, 'test', '2018-03-31 13:58:50', 1),
-(249, 3, 2, 'test', '2018-03-31 13:58:56', 0),
-(250, 1, 2, 'test', '2018-04-16 16:07:53', 1),
-(251, 2, 1, 'test', '2018-04-17 23:07:24', 1),
-(252, 1, 3, 'test', '2018-04-18 23:16:28', 1),
-(253, 1, 3, 'test', '2018-04-19 19:03:50', 1),
-(254, 3, 1, 'test test test', '2018-04-19 19:05:03', 1),
-(255, 1, 3, '1', '2018-04-19 19:05:16', 1),
-(256, 1, 3, '', '2018-04-19 19:05:20', 1),
-(257, 3, 1, '2', '2018-04-19 19:05:27', 1),
-(258, 1, 3, '3', '2018-04-19 19:05:34', 1),
-(259, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
-(260, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
-(261, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
-(262, 1, 2, 'TEST', '2018-04-20 10:43:38', 1),
-(263, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
-(264, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
-(265, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
-(266, 1, 2, 'TEST', '2018-04-20 10:52:33', 1),
-(267, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
-(268, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
-(269, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
-(270, 1, 2, 'TEST', '2018-04-20 10:54:30', 1),
-(271, 3, 1, 'test', '2018-04-20 11:48:20', 1),
-(272, 1, 2, 'gdk', '2018-04-20 12:02:06', 1),
-(273, 1, 2, 'TEST', '2018-04-20 12:37:12', 1),
-(274, 1, 2, 'TEST', '2018-04-20 12:40:50', 1),
-(275, 1, 2, 'TEST', '2018-04-21 11:53:59', 1),
-(276, 2, 1, 'test', '2018-04-21 12:16:09', 1),
-(277, 2, 1, 'test', '2018-04-21 12:40:41', 1),
-(278, 2, 1, 'test', '2018-04-21 12:40:50', 1),
-(279, 2, 1, 'test', '2018-04-21 12:40:52', 1),
-(280, 2, 1, 'test', '2018-04-21 12:40:53', 1),
-(281, 2, 1, 'test', '2018-04-21 12:55:40', 1),
-(282, 2, 1, 'test', '2018-04-21 12:57:11', 1),
-(283, 2, 1, 'test', '2018-04-21 12:57:20', 1),
-(284, 2, 1, 'test', '2018-04-21 12:58:12', 1),
-(285, 2, 1, 'test', '2018-04-21 12:58:28', 1),
-(286, 2, 1, 'test', '2018-04-21 12:58:40', 1),
-(287, 2, 1, 'test', '2018-04-21 13:05:34', 1),
-(288, 2, 1, 'test', '2018-04-21 13:05:39', 1),
-(289, 2, 1, 'test', '2018-04-21 13:05:44', 1),
-(290, 2, 1, 'test', '2018-04-21 13:05:49', 1),
-(291, 2, 1, 'test', '2018-04-21 13:05:52', 1),
-(292, 2, 1, 'ęóąśłżźćń', '2018-04-21 13:07:37', 1),
-(293, 2, 1, 'test', '2018-04-21 13:08:02', 1),
-(294, 2, 1, 'test', '2018-04-21 13:10:16', 1),
-(295, 2, 1, 'test', '2018-04-21 13:18:14', 1),
-(296, 2, 1, 'test', '2018-04-21 13:31:20', 1),
-(297, 2, 1, 'test', '2018-04-21 13:31:27', 1),
-(298, 2, 1, 'test', '2018-04-21 13:31:30', 1),
-(299, 2, 1, 'test', '2018-04-21 13:31:33', 1),
-(300, 2, 1, 'test', '2018-04-21 13:31:37', 1),
-(301, 2, 1, 'coś innego', '2018-04-21 13:33:07', 1),
-(302, 2, 1, 'test', '2018-04-21 13:33:24', 0),
-(303, 2, 1, 'test', '2018-04-21 13:33:33', 0),
-(304, 1, 2, 'TEST', '2018-04-21 14:23:47', 1),
-(305, 1, 2, 'TEST', '2018-04-25 18:20:50', 1),
-(306, 3, 1, 'test', '2018-04-25 23:14:56', 1),
-(307, 3, 1, 'test', '2018-04-25 23:15:33', 0),
-(308, 3, 1, 'test', '2018-04-25 23:15:37', 0),
-(309, 3, 1, 'test', '2018-04-25 23:15:39', 0),
-(310, 3, 1, 'test', '2018-04-25 23:15:41', 0),
-(311, 3, 1, 'test', '2018-04-25 23:15:43', 0);
+(249, 3, 2, 'test', '2018-03-31 13:58:56', 1),
+(250, 1, 2, 'test', '2018-04-18 10:53:12', 1),
+(251, 2, 1, 'test tesst', '2018-04-18 10:53:29', 1),
+(252, 1, 2, 'asdnbjasdjiasd', '2018-04-18 10:53:41', 1),
+(253, 2, 3, 'Witaj', '2018-04-18 11:48:05', 0),
+(254, 2, 1, 'Witaj', '2018-04-18 11:48:26', 1),
+(255, 1, 2, 'Dzie? D', '2018-04-18 11:48:39', 1),
+(256, 1, 2, '?', '2018-04-18 11:48:43', 1),
+(257, 2, 1, 'dzień', '2018-04-18 14:53:22', 1),
+(258, 2, 1, 'ęóąśłżźćń', '2018-04-18 14:53:44', 1),
+(259, 1, 2, 'gg', '2018-04-25 11:44:59', 1),
+(260, 1, 2, 'ęą', '2018-04-25 11:45:24', 1),
+(261, 2, 1, 'gh', '2018-04-25 11:45:40', 1),
+(262, 1, 2, 'hgg', '2018-04-25 11:46:06', 1),
+(263, 2, 1, 'dobry ąłźN', '2018-04-25 11:46:18', 1),
+(264, 1, 3, 'a', '2018-04-25 11:51:21', 1),
+(265, 1, 3, 'fluk tam jadziem', '2018-04-25 11:54:58', 1),
+(266, 3, 1, 'jooo', '2018-04-25 11:57:01', 1),
+(267, 3, 1, 'jooo Halina', '2018-04-25 12:04:11', 1),
+(268, 3, 1, 'test', '2018-04-25 12:10:54', 1),
+(269, 3, 1, '1test', '2018-04-25 12:11:58', 0),
+(270, 3, 1, 'test', '2018-04-25 12:13:00', 0),
+(271, 3, 1, 'uhbhububhub', '2018-04-25 12:19:02', 0),
+(272, 2, 1, 'dobry dobry ', '2018-05-08 16:48:43', 1),
+(273, 1, 2, 'elo', '2018-05-08 16:50:11', 1),
+(274, 2, 1, 'Dzień dobry', '2018-05-08 17:01:26', 1),
+(275, 1, 2, 'ddd', '2018-05-08 17:02:06', 1),
+(276, 2, 1, 'dasdasd', '2018-05-08 17:02:13', 1),
+(277, 2, 1, 'asdasd', '2018-05-08 17:02:54', 1),
+(278, 1, 2, 'dzi', '2018-05-08 17:03:29', 1);
 
 --
 -- Indeksy dla zrzutów tabel
 --
 
 --
--- Indeksy dla tabeli `kontakty`
+-- Indexes for table `kontakty`
 --
 ALTER TABLE `kontakty`
-  ADD PRIMARY KEY (`idKontaktu`),
-  ADD KEY `idUzytkownika1` (`idUzytkownika1`),
-  ADD KEY `idUzytkownika2` (`idUzytkownika2`);
+ ADD PRIMARY KEY (`idKontaktu`);
 
 --
--- Indeksy dla tabeli `uzytkownicy`
+-- Indexes for table `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  ADD PRIMARY KEY (`idUzytkownika`);
+ ADD PRIMARY KEY (`idUzytkownika`);
 
 --
--- Indeksy dla tabeli `wiadomosci`
+-- Indexes for table `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  ADD PRIMARY KEY (`idWiadomosci`),
-  ADD KEY `idWysylajacego` (`idWysylajacego`),
-  ADD KEY `idAdresata` (`idAdresata`);
+ ADD PRIMARY KEY (`idWiadomosci`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -428,39 +391,17 @@ ALTER TABLE `wiadomosci`
 -- AUTO_INCREMENT dla tabeli `kontakty`
 --
 ALTER TABLE `kontakty`
-  MODIFY `idKontaktu` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
+MODIFY `idKontaktu` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT dla tabeli `uzytkownicy`
 --
 ALTER TABLE `uzytkownicy`
-  MODIFY `idUzytkownika` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
+MODIFY `idUzytkownika` int(5) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT dla tabeli `wiadomosci`
 --
 ALTER TABLE `wiadomosci`
-  MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=312;
-
---
--- Ograniczenia dla zrzutów tabel
---
-
---
--- Ograniczenia dla tabeli `kontakty`
---
-ALTER TABLE `kontakty`
-  ADD CONSTRAINT `kontakty_ibfk_1` FOREIGN KEY (`idUzytkownika1`) REFERENCES `uzytkownicy` (`idUzytkownika`),
-  ADD CONSTRAINT `kontakty_ibfk_2` FOREIGN KEY (`idUzytkownika2`) REFERENCES `uzytkownicy` (`idUzytkownika`);
-
---
--- Ograniczenia dla tabeli `wiadomosci`
---
-ALTER TABLE `wiadomosci`
-  ADD CONSTRAINT `wiadomosci_ibfk_1` FOREIGN KEY (`idWysylajacego`) REFERENCES `uzytkownicy` (`idUzytkownika`),
-  ADD CONSTRAINT `wiadomosci_ibfk_2` FOREIGN KEY (`idAdresata`) REFERENCES `uzytkownicy` (`idUzytkownika`);
-COMMIT;
-
+MODIFY `idWiadomosci` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=279;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
