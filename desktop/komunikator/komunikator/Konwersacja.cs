@@ -167,10 +167,26 @@ namespace komunikator
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
-                    zapytanie.CommandText = "select tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
-                        + znajdzIdUzytkownika(adresat) + " order by idWiadomosci";
+                    zapytanie.CommandText = "select count(*) from wiadomosci where idAdresata="
+                        + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego=" + znajdzIdUzytkownika(adresat) + " order by idWiadomosci";
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
                     while(wynik.Read())
+                    {
+                        if (wynik["count(*)"].ToString().Equals("0"))
+                        {
+                            return wiadomosci;
+                        }
+                    }
+                }
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand zapytanie = polaczenie.CreateCommand();
+                    zapytanie.CommandText = "select idWiadomosci, tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+                        + znajdzIdUzytkownika(adresat) + " order by idWiadomosci";
+                    string najwiekszeId = null;
+                    MySqlDataReader wynik = zapytanie.ExecuteReader();
+                    while (wynik.Read())
                     {
                         wiadomosci.Add(new Wiadomosc
                         {
@@ -178,11 +194,12 @@ namespace komunikator
                             data = wynik["data"].ToString(),
                             tresc = wynik["tresc"].ToString()
                         });
+                        najwiekszeId = wynik["idWiadomosci"].ToString();
                     }
                     wynik.Close();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
                     polecenie.CommandText = "update wiadomosci set wyswietlona=1 where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
-                        + znajdzIdUzytkownika(adresat);
+                        + znajdzIdUzytkownika(adresat) + " and idWiadomosci<=" + najwiekszeId;
                     polecenie.ExecuteReader();
                 }
                 return wiadomosci;

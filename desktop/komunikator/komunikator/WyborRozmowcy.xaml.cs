@@ -13,12 +13,13 @@ namespace komunikator
     /// </summary>
     public partial class WyborRozmowcy : Window
     {
-        private string zalogowanyUzytkownik = "uzytkownik1";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
+        private string zalogowanyUzytkownik;//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
         private int idzalogowanegouzytkownika = 0;
         private Timer odswiezacz;
 
-        public WyborRozmowcy()
+        public WyborRozmowcy(string val)
         {
+            zalogowanyUzytkownik = val;
             InitializeComponent();
             statusUzytkownika.ItemsSource = new List<string>()
             {
