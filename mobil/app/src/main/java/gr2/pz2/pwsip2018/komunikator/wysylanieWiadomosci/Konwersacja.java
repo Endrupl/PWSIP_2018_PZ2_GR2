@@ -13,7 +13,7 @@ public class Konwersacja
 {
     public String login;
     public String adresat;
-    private static final String DANE_BAZY ="jdbc:mysql://192.168.0.2:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
+    private static final String DANE_BAZY ="jdbc:mysql://192.168.43.185:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
     private static final String UZYTKOWNIK_BAZY ="root";
     private static final String HASLO_BAZY ="";
 
@@ -153,13 +153,24 @@ public class Konwersacja
         przygotujDoPolaczeniaZBaza();
         Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
         Statement st=polaczenie.createStatement();
-        ResultSet wynik=st.executeQuery("select tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+        ResultSet wynikZero=st.executeQuery("select count(*) from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
                 + znajdzIdUzytkownika(adresat) + " order by idWiadomosci");
+        while(wynikZero.next())
+        {
+            if(wynikZero.getString("count(*)").equals("0"))
+            {
+                return wiadomosci;
+            }
+        }
+        ResultSet wynik=st.executeQuery("select idWiadomosci, tresc, data from wiadomosci where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego="
+                + znajdzIdUzytkownika(adresat) + " order by idWiadomosci");
+        String najwiekszeId=null;
         while (wynik.next())
         {
             wiadomosci.add(new Wiadomosc(wynik.getString("tresc"), adresat, wynik.getString("data")));
+            najwiekszeId=wynik.getString("idWiadomosci");
         }
-        st.executeUpdate("update wiadomosci set wyswietlona=1 where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego=" + znajdzIdUzytkownika(adresat));
+        st.executeUpdate("update wiadomosci set wyswietlona=1 where idAdresata=" + znajdzIdUzytkownika(login) + " and wyswietlona=0 and idWysylajacego=" + znajdzIdUzytkownika(adresat)+" and idWiadomosci<="+najwiekszeId);
         return wiadomosci;
     }
 

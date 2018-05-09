@@ -7,5 +7,9 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Jakiś tekst"
-        android:id="@+id/wm" />
+        android:id="@+id/wm"
+        android:paddingStart="20dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="20dp"/>
 </LinearLayout>

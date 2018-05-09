@@ -17,7 +17,7 @@ import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
 
 public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
-    private String zalogowanyUzytkownik = "uzytkownik1";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
+    private String zalogowanyUzytkownik = "uzytkownik2";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
     private String idzalogowanegouzytkownika = "";
     private ListView kontakty;
     private ArrayList<Konwersacja.Kontakt> kontaktyUzytkownika;
@@ -166,7 +166,8 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
                 kontaktyUzytkownika.get(i).nieodczytaneWiadomosci=0;
             }
         }
-        kontakty.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        //kontakty.setAdapter(adapter);
     }
 
     private void odswiezKontaktyIWyzerujNoweWiadomosci()
