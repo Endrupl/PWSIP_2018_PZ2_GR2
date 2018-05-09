@@ -17,31 +17,22 @@ using Microsoft.Win32;
 using System.Collections.Specialized;
 using MySql.Data.MySqlClient;
 
-namespace Registration
+namespace komunikator
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Rejestracja.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Rejestracja : Page
     {
+
         private const string DANE_BAZY = "Server=localhost; database=komunikator; UID=root; password=; CharSet=utf8";
         //private OpenFileDialog FileChooser;
         WebClient client = new WebClient();
-        public MainWindow()
+
+        public Rejestracja()
         {
             InitializeComponent();
         }
-
-        /* private void UploadImage_Click(object sender, RoutedEventArgs e)
-         {
-             FileChooser = new OpenFileDialog();
-             FileChooser.Title = "Wybierz swój Awatar ";
-             FileChooser.Filter = "Image Files (*.bmp,*.png,*.jpg,*.jpeg)|*.bmp;*.png;*.jpg;*.jpeg";
-             if (FileChooser.ShowDialog().Value)
-             {
-                 UserImage.Text = FileChooser.FileName;
-             }
-         }*/
 
         private void SubmitUser_Click(object sender, RoutedEventArgs e)
         {
@@ -69,6 +60,12 @@ namespace Registration
 
             /* client.Headers.Add("Content-Type", "binary/octet-stream");
              byte[] InsertUserImage = client.UploadFile("http://localhost/rejestracja/InsertUser.php", FileChooser.FileName);*/
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Logowanie l1 = new Logowanie();
+            this.NavigationService.Navigate(l1);
         }
     }
 }
