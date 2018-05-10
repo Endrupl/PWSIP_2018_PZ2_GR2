@@ -83,7 +83,7 @@ public class KonwersacjaOkno extends AppCompatActivity {
             }
             if(obecnaLiczbaWiadomosci!=wczytaneWiadomosci.size())
             {
-                czat.setSelection(adapter.getCount()-1);
+                czat.setSelection(wczytaneWiadomosci.size()-1);
             }
         }
         catch(SQLException e) { }
