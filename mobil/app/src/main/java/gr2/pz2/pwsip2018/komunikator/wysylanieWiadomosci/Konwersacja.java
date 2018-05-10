@@ -16,6 +16,8 @@ public class Konwersacja
     private static final String DANE_BAZY ="jdbc:mysql://192.168.1.16:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
     private static final String UZYTKOWNIK_BAZY ="root";
     private static final String HASLO_BAZY ="";
+    private int liczbaWszystkichWiadomosciNaPoczatku;
+    private int zaladowaneWiadomosci;
 
     public Konwersacja(String login, String adresat)
     {
@@ -108,11 +110,21 @@ public class Konwersacja
     public ArrayList<Wiadomosc> wczytajWiadomosci() throws SQLException
     {
         ArrayList<Wiadomosc> wiadomosci = new ArrayList<Wiadomosc>();
+        int liczbaWiadomosci=0;
         przygotujDoPolaczeniaZBaza();
         Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
         Statement st=polaczenie.createStatement();
-        ResultSet wynik=st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego="+znajdzIdUzytkownika(login)+" and idAdresata="
-                +znajdzIdUzytkownika(adresat)+") or (idWysylajacego="+znajdzIdUzytkownika(adresat)+" and idAdresata="+znajdzIdUzytkownika(login)+") order by idWiadomosci");
+        ResultSet wynik=st.executeQuery("SELECT count(*) from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="+ znajdzIdUzytkownika(adresat)
+                + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)+ ") order by idWiadomosci");
+        while(wynik.next())
+        {
+            liczbaWiadomosci = Integer.parseInt(wynik.getString("count(*)"));
+        }
+        liczbaWszystkichWiadomosciNaPoczatku = liczbaWiadomosci;
+        wynik=st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="+ znajdzIdUzytkownika(adresat)
+                + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)+ ") order by idWiadomosci limit 10 offset "
+                + (liczbaWiadomosci - 10));
+        zaladowaneWiadomosci = 10;
         while(wynik.next())
         {
             wiadomosci.add(new Wiadomosc(wynik.getString("tresc"), znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), wynik.getString("data")));
@@ -229,6 +241,23 @@ public class Konwersacja
             nieodczytaneWiadomosci.put(znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), Integer.valueOf(Integer.parseInt(wynik.getString("niewyswietlone"))));
         }
         return nieodczytaneWiadomosci;
+    }
+
+    public ArrayList<Wiadomosc> zaladujWczesniejszeWiadomosci() throws SQLException
+    {
+        ArrayList<Wiadomosc> wiadomosci = new ArrayList<Wiadomosc>();
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        zaladowaneWiadomosci += 10;
+        ResultSet wynik=st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                + ") order by idWiadomosci limit 10 offset " + (liczbaWszystkichWiadomosciNaPoczatku - zaladowaneWiadomosci));
+        while (wynik.next())
+        {
+            wiadomosci.add(new Wiadomosc(wynik.getString("tresc"), znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), wynik.getString("data")));
+        }
+        return wiadomosci;
     }
 
     public static class Wiadomosc

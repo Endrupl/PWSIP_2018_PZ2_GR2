@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -93,5 +94,22 @@ public class KonwersacjaOkno extends AppCompatActivity {
     {
         odswiezacz.removeCallbacks(dzialanie);
         startActivity(new Intent(KonwersacjaOkno.this, WyborRozmowcy.class));
+    }
+
+    public void onClickWiecej(View v)
+    {
+        try
+        {
+            ArrayList<Konwersacja.Wiadomosc> wiadomosci = k.zaladujWczesniejszeWiadomosci();
+            ArrayList<Konwersacja.Wiadomosc> nowaLista=new ArrayList<Konwersacja.Wiadomosc>();
+            nowaLista.addAll(wiadomosci);
+            nowaLista.addAll(wczytaneWiadomosci);
+            wczytaneWiadomosci=nowaLista;
+            czat.setAdapter(new WiadomoscAdapter(this, wczytaneWiadomosci));
+        }
+        catch(SQLException e)
+        {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+        }
     }
 }

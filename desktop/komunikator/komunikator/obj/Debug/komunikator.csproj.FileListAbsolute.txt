@@ -101,3 +101,6 @@ C:\Do_usuniecia_w_przyszlosci\Komunikator2\PWSIP_2018_PZ2_GR2\desktop\komunikato
 C:\Do_usuniecia_w_przyszlosci\Komunikator2\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\Logowanie.baml
 C:\Do_usuniecia_w_przyszlosci\Komunikator2\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\rejestracja.baml
 C:\Do_usuniecia_w_przyszlosci\Komunikator2\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\Window1.baml
+C:\Do_usuniecia_w_przyszlosci\Komunikator3\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\bin\Debug\komunikator.exe.config
+C:\Do_usuniecia_w_przyszlosci\Komunikator3\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\komunikator.exe
+C:\Do_usuniecia_w_przyszlosci\Komunikator3\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\komunikator.pdb
