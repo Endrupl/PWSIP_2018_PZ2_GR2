@@ -75,11 +75,15 @@ public class KonwersacjaOkno extends AppCompatActivity {
         try
         {
             ArrayList<Konwersacja.Wiadomosc> wiadomosci = k.odswiezKonwersacje();
+            int obecnaLiczbaWiadomosci=wczytaneWiadomosci.size();
             for(int i=0; i<wiadomosci.size(); i++)
             {
                 wczytaneWiadomosci.add(wiadomosci.get(i));
             }
-            czat.setSelection(adapter.getCount()-1);
+            if(obecnaLiczbaWiadomosci!=wczytaneWiadomosci.size())
+            {
+                czat.setSelection(adapter.getCount()-1);
+            }
         }
         catch(SQLException e) { }
     }
