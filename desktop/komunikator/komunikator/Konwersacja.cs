@@ -125,10 +125,26 @@ namespace komunikator
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
-                    polecenie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
-                        + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
-                        + ") order by idWiadomosci limit 10 offset " + (liczbaWiadomosci - 10).ToString();
-                    zaladowaneWiadomosci = 10;
+                    if (liczbaWszystkichWiadomosciNaPoczatku > 10)
+                    {
+                        polecenie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                            + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                            + ") order by idWiadomosci limit 10 offset " + (liczbaWiadomosci - 10).ToString();
+                    }
+                    else
+                    {
+                        polecenie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                            + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                            + ") order by idWiadomosci";
+                    }
+                    if (liczbaWszystkichWiadomosciNaPoczatku > 10)
+                    {
+                        zaladowaneWiadomosci = 10;
+                    }
+                    else
+                    {
+                        zaladowaneWiadomosci = liczbaWszystkichWiadomosciNaPoczatku;
+                    }
                     MySqlDataReader wynik = polecenie.ExecuteReader();
                     while (wynik.Read())
                     {
@@ -343,10 +359,21 @@ namespace komunikator
                 {
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
-                    zaladowaneWiadomosci += 10;
-                    zapytanie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata=" 
-                        + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login) 
-                        + ") order by idWiadomosci limit 10 offset " + (liczbaWszystkichWiadomosciNaPoczatku - zaladowaneWiadomosci).ToString();
+                    if (zaladowaneWiadomosci + 10 < liczbaWszystkichWiadomosciNaPoczatku)
+                    {
+                        zaladowaneWiadomosci += 10;
+                        zapytanie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                            + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                            + ") order by idWiadomosci limit 10 offset " + (liczbaWszystkichWiadomosciNaPoczatku - zaladowaneWiadomosci).ToString();
+                    }
+                    else
+                    {
+                        int liczbaNajstarszychWiadomosci = liczbaWszystkichWiadomosciNaPoczatku - zaladowaneWiadomosci;
+                        zaladowaneWiadomosci = liczbaWszystkichWiadomosciNaPoczatku;
+                        zapytanie.CommandText = "SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                            + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                            + ") order by idWiadomosci limit " + liczbaNajstarszychWiadomosci + " offset 0";
+                    }
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
                     while (wynik.Read())
                     {
