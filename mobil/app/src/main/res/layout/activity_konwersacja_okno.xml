@@ -28,6 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="12dp"
+        android:layout_marginBottom="20dp"
         android:clickable="true"
         android:onClick="onClickWyslij"
         app:srcCompat="@android:drawable/ic_menu_send" />
@@ -35,7 +36,7 @@
     <ListView
         android:id="@+id/czat"
         android:layout_width="match_parent"
-        android:layout_height="433dp"
+        android:layout_height="460dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginBottom="19dp"
@@ -48,6 +49,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="WIĘCEJ..."
+        android:text="Pokaż Więcej..."
         android:onClick="onClickWiecej"/>
+
+
 </RelativeLayout>

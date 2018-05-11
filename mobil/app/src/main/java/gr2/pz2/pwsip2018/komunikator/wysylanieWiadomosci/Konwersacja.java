@@ -13,7 +13,7 @@ public class Konwersacja
 {
     public String login;
     public String adresat;
-    private static final String DANE_BAZY ="jdbc:mysql://192.168.1.16:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
+    private static final String DANE_BAZY ="jdbc:mysql://192.168.1.12:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
     private static final String UZYTKOWNIK_BAZY ="root";
     private static final String HASLO_BAZY ="";
     private int liczbaWszystkichWiadomosciNaPoczatku;
@@ -53,6 +53,49 @@ public class Konwersacja
             id=wynik.getString("idUzytkownika");
         }
         return id;
+    }
+
+    public static String znajdzLoginIHaslo(String login,String haslo) throws SQLException
+    {
+        przygotujDoPolaczeniaZBaza();
+        String nazwaUser = null;
+        Connection polaczenie;
+        Statement st;
+        polaczenie= DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select login from uzytkownicy where login='" + login + "' and haslo='" + haslo + "'");
+        while (wynik.next())
+        {
+            nazwaUser=wynik.getString("login");
+        }
+        return nazwaUser;
+    }
+
+    public static String znajdzEmailUzytkownika(String login) throws SQLException
+    {
+        przygotujDoPolaczeniaZBaza();
+        String id = null;
+        Connection polaczenie;
+        Statement st;
+        polaczenie= DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        st=polaczenie.createStatement();
+        ResultSet wynik=st.executeQuery("select Email from uzytkownicy where login='" + login + "'");
+        while (wynik.next())
+        {
+            id=wynik.getString("Email");
+        }
+        return id;
+    }
+
+    public static void dodajUzytkownika(String nazwauser, String email, String password) throws SQLException
+    {
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie;
+        Statement st;
+        polaczenie= DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        st=polaczenie.createStatement();
+        st.executeUpdate("insert into uzytkownicy values (null,'" + nazwauser + "','dostępny','" + email + "','" + password + "')");
+
     }
 
     public static String znajdzUzytkownikaPoId(String id) throws SQLException

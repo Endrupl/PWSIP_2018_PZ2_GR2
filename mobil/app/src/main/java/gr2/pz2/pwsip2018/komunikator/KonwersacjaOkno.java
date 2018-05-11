@@ -28,6 +28,7 @@ public class KonwersacjaOkno extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_konwersacja_okno);
+        getSupportActionBar().hide();
         k=new Konwersacja(getIntent().getStringExtra("uzytkownik"), getIntent().getStringExtra("adresat"));
         czat=findViewById(R.id.czat);
         wiadomoscTekst=findViewById(R.id.wiadomoscTekst);

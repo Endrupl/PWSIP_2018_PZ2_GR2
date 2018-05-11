@@ -17,7 +17,7 @@ import gr2.pz2.pwsip2018.komunikator.wysylanieWiadomosci.Konwersacja;
 
 public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
-    private String zalogowanyUzytkownik = "uzytkownik2";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
+    private String zalogowanyUzytkownik ="";//tymczasowe założenie, że zalogowany użytkownik to uzytkownik1
     private String idzalogowanegouzytkownika = "";
     private ListView kontakty;
     private ArrayList<Konwersacja.Kontakt> kontaktyUzytkownika;
@@ -28,6 +28,8 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getSupportActionBar().hide();
+        zalogowanyUzytkownik=getIntent().getStringExtra("Username");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wybor_rozmowcy);
         szukanyUzytkownik=findViewById(R.id.szukanyUzytkownik);
