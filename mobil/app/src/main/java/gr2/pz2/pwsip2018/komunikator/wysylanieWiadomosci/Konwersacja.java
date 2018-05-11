@@ -121,10 +121,25 @@ public class Konwersacja
             liczbaWiadomosci = Integer.parseInt(wynik.getString("count(*)"));
         }
         liczbaWszystkichWiadomosciNaPoczatku = liczbaWiadomosci;
-        wynik=st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="+ znajdzIdUzytkownika(adresat)
-                + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)+ ") order by idWiadomosci limit 10 offset "
-                + (liczbaWiadomosci - 10));
-        zaladowaneWiadomosci = 10;
+        if(liczbaWszystkichWiadomosciNaPoczatku>10) {
+            wynik = st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                    + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                    + ") order by idWiadomosci limit 10 offset " + (liczbaWiadomosci - 10));
+        }
+        else
+        {
+            wynik = st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                    + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                    + ") order by idWiadomosci");
+        }
+        if(liczbaWszystkichWiadomosciNaPoczatku>10)
+        {
+            zaladowaneWiadomosci = 10;
+        }
+        else
+        {
+            zaladowaneWiadomosci=liczbaWszystkichWiadomosciNaPoczatku;
+        }
         while(wynik.next())
         {
             wiadomosci.add(new Wiadomosc(wynik.getString("tresc"), znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), wynik.getString("data")));
@@ -249,10 +264,21 @@ public class Konwersacja
         przygotujDoPolaczeniaZBaza();
         Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
         Statement st=polaczenie.createStatement();
-        zaladowaneWiadomosci += 10;
-        ResultSet wynik=st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
-                + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
-                + ") order by idWiadomosci limit 10 offset " + (liczbaWszystkichWiadomosciNaPoczatku - zaladowaneWiadomosci));
+        ResultSet wynik;
+        if(zaladowaneWiadomosci+10<liczbaWszystkichWiadomosciNaPoczatku) {
+            zaladowaneWiadomosci += 10;
+            wynik = st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                    + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                    + ") order by idWiadomosci limit 10 offset " + (liczbaWszystkichWiadomosciNaPoczatku - zaladowaneWiadomosci));
+        }
+        else
+        {
+            int liczbaNajstarszychWiadomosci=liczbaWszystkichWiadomosciNaPoczatku-zaladowaneWiadomosci;
+            zaladowaneWiadomosci=liczbaWszystkichWiadomosciNaPoczatku;
+            wynik = st.executeQuery("SELECT idWysylajacego, tresc, data from wiadomosci where (idWysylajacego=" + znajdzIdUzytkownika(login) + " and idAdresata="
+                    + znajdzIdUzytkownika(adresat) + ") or (idWysylajacego=" + znajdzIdUzytkownika(adresat) + " and idAdresata=" + znajdzIdUzytkownika(login)
+                    + ") order by idWiadomosci limit "+liczbaNajstarszychWiadomosci+" offset 0");
+        }
         while (wynik.next())
         {
             wiadomosci.add(new Wiadomosc(wynik.getString("tresc"), znajdzUzytkownikaPoId(wynik.getString("idWysylajacego")), wynik.getString("data")));
