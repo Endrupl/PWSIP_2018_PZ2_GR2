@@ -93,7 +93,8 @@ public class KonwersacjaOkno extends AppCompatActivity {
     public void onBackPressed()
     {
         odswiezacz.removeCallbacks(dzialanie);
-        startActivity(new Intent(KonwersacjaOkno.this, WyborRozmowcy.class));
+        super.onBackPressed();
+        //startActivity(new Intent(KonwersacjaOkno.this, WyborRozmowcy.class));
     }
 
     public void onClickWiecej(View v)
