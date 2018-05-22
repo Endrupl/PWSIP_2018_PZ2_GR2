@@ -62,11 +62,21 @@ namespace komunikator
         private void wyslijPrzycisk_Click(object sender, RoutedEventArgs e)
         {
             string czasSerwera=null;
+            string pom = null;
             try
             {
-                czasSerwera=k.wyslijWiadomosc(wiadomoscTekst.Text);
-                czat.Items.Add(new Konwersacja.Wiadomosc { tresc = wiadomoscTekst.Text, data = czasSerwera, uzytkownik = k.login });
-                czat.ScrollIntoView(czat.Items.GetItemAt(czat.Items.Count - 1));
+                pom = k.czyZablokowany(k.login, k.adresat);
+                if(pom !="tak")
+                {
+                    czasSerwera = k.wyslijWiadomosc(wiadomoscTekst.Text);
+                    czat.Items.Add(new Konwersacja.Wiadomosc { tresc = wiadomoscTekst.Text, data = czasSerwera, uzytkownik = k.login });
+                    czat.ScrollIntoView(czat.Items.GetItemAt(czat.Items.Count - 1));
+                }else
+                {
+                    wyslijPrzycisk.IsEnabled = false;
+                    MessageBox.Show("Użytkownik zablokowany!");
+                }
+
             }
             catch(MySqlException)
             {

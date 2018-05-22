@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MySql.Data.MySqlClient;
+using System.Windows;
 
 namespace komunikator
 {
@@ -81,7 +82,24 @@ namespace komunikator
                 }
                 return uzytkownik;
             }
-
+            public string czyZablokowany(string login, string adresat)
+            {
+                string zablokowany = null;
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "select zablokowany from kontakty where idUzytkownika1=" + znajdzIdUzytkownika(login) + " and idUzytkownika2=" + znajdzIdUzytkownika(adresat)+ " or idUzytkownika1=" + znajdzIdUzytkownika(adresat) + " and idUzytkownika2=" + znajdzIdUzytkownika(login);
+                    MySqlDataReader wynikzapytania = polecenie.ExecuteReader();
+                    while (wynikzapytania.Read())
+                    {
+                        zablokowany = wynikzapytania["zablokowany"].ToString();
+                    }
+                    //zablokowany = wynikzapytania.ToString();
+                  //  MessageBox.Show(zablokowany);
+                }
+                return zablokowany;
+            }
             public string wyslijWiadomosc(string tresc)
             {
                 string czasWiadomosci=null;
@@ -89,18 +107,24 @@ namespace komunikator
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
-                    polecenie.CommandText = "insert into wiadomosci values (null, " + znajdzIdUzytkownika(login) + ", " + znajdzIdUzytkownika(adresat) +
+
+                        polecenie.CommandText = "insert into wiadomosci values (null, " + znajdzIdUzytkownika(login) + ", " + znajdzIdUzytkownika(adresat) +
                         ", '" + tresc + "', now(), 0)";
-                    polecenie.ExecuteReader().Close();
-                    MySqlCommand czasSerwera = polaczenie.CreateCommand();
-                    czasSerwera.CommandText = "select data from wiadomosci where idWysylajacego=" + znajdzIdUzytkownika(login) + " order by idWiadomosci desc limit 1";
-                    MySqlDataReader wynik = czasSerwera.ExecuteReader();
-                    while(wynik.Read())
-                    {
-                        czasWiadomosci = wynik["data"].ToString();
-                    }
+                        polecenie.ExecuteReader().Close();
+                        MySqlCommand czasSerwera = polaczenie.CreateCommand();
+                        czasSerwera.CommandText = "select data from wiadomosci where idWysylajacego=" + znajdzIdUzytkownika(login) + " order by idWiadomosci desc limit 1";
+                        MySqlDataReader wynik = czasSerwera.ExecuteReader();
+                        while (wynik.Read())
+                        {
+                            czasWiadomosci = wynik["data"].ToString();
+                        }
+                        return czasWiadomosci;
+
+
+
+                    
                 }
-                return czasWiadomosci;  
+                
             }
 
             public List<Wiadomosc> wczytajWiadomosci()
@@ -250,10 +274,11 @@ namespace komunikator
                     polaczenie.Open();
                     MySqlCommand zapytanie = polaczenie.CreateCommand();
                     zapytanie.CommandText = "select count(*) from uzytkownicy where login='" + szukanyLogin + "'";
+                    //zapytanie.CommandText = "select count(*) from uzytkownicy u, kontakty k where(u.idUzytkownika = k.idUzytkownika1 or u.idUzytkownika = k.idUzytkownika2) and login = '" + szukanyLogin + "' and k.zablokowany = 'nie'";
                     MySqlDataReader wynik = zapytanie.ExecuteReader();
-                    while(wynik.Read())
+                    while (wynik.Read())
                     {
-                        if(wynik["count(*)"].ToString().Equals("0"))
+                        if (wynik["count(*)"].ToString().Equals("0"))
                         {
                             return false;
                         }
@@ -268,11 +293,12 @@ namespace komunikator
 
             public static void dodajKontakt(string login1, string login2)
             {
+                
                 using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
                 {
                     polaczenie.Open();
                     MySqlCommand polecenie = polaczenie.CreateCommand();
-                    polecenie.CommandText = "insert into kontakty values(null, " + znajdzIdUzytkownika(login1) + ", " + znajdzIdUzytkownika(login2) + ")";
+                    polecenie.CommandText = "insert into kontakty values(null, " + znajdzIdUzytkownika(login1) + ", " + znajdzIdUzytkownika(login2) + ",'nie')";
                     polecenie.ExecuteReader();
                 }
             }
@@ -410,6 +436,37 @@ namespace komunikator
                     }
                     kontaktInfo = kontaktInfo + " " + status;
                     return kontaktInfo;
+                }
+            }
+            
+            public static void zablokujKontakt(string login1, string login2)
+            {
+                string id1 = znajdzIdUzytkownika(login1);
+                string id2 = znajdzIdUzytkownika(login2);
+
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "update kontakty set zablokowany = 'tak' where (idUzytkownika1=" + id1 + " and idUzytkownika2=" + id2 + ") or (idUzytkownika1=" + id2
+                        + " and idUzytkownika2=" + id1 + ")";
+                    //polecenie.CommandText = "update uzytkownicy set zablokowany = 'tak' where login='" + login + "'";
+                    polecenie.ExecuteReader();
+                }
+            }
+            public static void odblokujKontakt(string login1, string login2)
+            {
+                string id1 = znajdzIdUzytkownika(login1);
+                string id2 = znajdzIdUzytkownika(login2);
+
+                using (MySqlConnection polaczenie = new MySqlConnection(DANE_BAZY))
+                {
+                    polaczenie.Open();
+                    MySqlCommand polecenie = polaczenie.CreateCommand();
+                    polecenie.CommandText = "update kontakty set zablokowany = 'nie' where (idUzytkownika1=" + id1 + " and idUzytkownika2=" + id2 + ") or (idUzytkownika1=" + id2
+                       + " and idUzytkownika2=" + id1 + ")";
+                    //polecenie.CommandText = "update uzytkownicy set zablokowany = 'nie' where login='" + login + "'";
+                    polecenie.ExecuteReader();
                 }
             }
         }

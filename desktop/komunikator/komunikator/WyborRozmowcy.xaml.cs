@@ -154,6 +154,7 @@ namespace komunikator
                     MessageBoxButton.OK, MessageBoxImage.Exclamation);
                 return;
             }
+            
             KonwersacjaOkno okienko = new KonwersacjaOkno(zalogowanyUzytkownik, ((Konwersacja.Kontakt)kontakty.SelectedItem).login);
             okienko.Show();
         }
@@ -185,5 +186,43 @@ namespace komunikator
             }
             
         }
+
+        private void zablokuj_Click(object sender, RoutedEventArgs e)
+        {
+            if (kontakty.SelectedIndex == -1)
+            {
+                MessageBox.Show("Wybierz kontakt, który chcesz zablokowac.", "Wybierz kontakt, który chcesz zablokowac", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            try
+            {
+                Konwersacja.zablokujKontakt(zalogowanyUzytkownik,((Konwersacja.Kontakt)kontakty.SelectedItem).login);
+                
+            }
+            catch (MySqlException)
+            {
+                MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void odblokuj_Click(object sender, RoutedEventArgs e)
+        {
+            if (kontakty.SelectedIndex == -1)
+            {
+                MessageBox.Show("Wybierz kontakt, który chcesz zablokowac.", "Wybierz kontakt, który chcesz zablokowac", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+            try
+            {
+                Konwersacja.odblokujKontakt(zalogowanyUzytkownik,((Konwersacja.Kontakt)kontakty.SelectedItem).login);
+
+            }
+            catch (MySqlException)
+            {
+                MessageBox.Show("Błąd połączenia z serwerem. Sprawdź połączenie z Internetem.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
-}
+    }
+

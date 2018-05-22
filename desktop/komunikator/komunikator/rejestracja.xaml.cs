@@ -48,6 +48,7 @@ namespace komunikator
                 MySqlCommand zapytanie = polaczenie.CreateCommand();
                 zapytanie.CommandText = "INSERT INTO uzytkownicy (idUzytkownika,login,Email,haslo) VALUES (NULL,'" + login.Text + "','" + Email.Text + "','" + haslo.Password + "') ";
                 zapytanie.ExecuteReader();
+                MessageBox.Show("Pomyślnie zarejestrowano!");
                 /*while (wynik.Read())
                 {
                     id = wynik["idUzytkownika"].ToString();

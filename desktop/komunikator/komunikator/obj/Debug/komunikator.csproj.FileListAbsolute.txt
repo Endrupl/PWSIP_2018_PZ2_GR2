@@ -127,3 +127,86 @@ C:\Do_usuniecia_w_przyszlosci\Komunikator3\PWSIP_2018_PZ2_GR2\desktop\komunikato
 C:\Do_usuniecia_w_przyszlosci\Komunikator3\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\komunikator.Properties.Resources.resources
 C:\Do_usuniecia_w_przyszlosci\Komunikator3\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\obj\Debug\komunikator.csproj.GenerateResource.Cache
 C:\Do_usuniecia_w_przyszlosci\Komunikator3\PWSIP_2018_PZ2_GR2\desktop\komunikator\komunikator\bin\Debug\komunikator.pdb
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\bin\Debug\komunikator.exe.config
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\bin\Debug\komunikator.exe
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\bin\Debug\komunikator.pdb
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\bin\Debug\MySql.Data.xml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\Konwersacja.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\Logowanie.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\MainWindow.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\rejestracja.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\Window1.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\WyborRozmowcy.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\App.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator_MarkupCompile.cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator_MarkupCompile.lref
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\Konwersacja.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\Logowanie.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\MainWindow.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\rejestracja.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\Window1.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\WyborRozmowcy.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator.g.resources
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator.Properties.Resources.resources
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator.csproj.GenerateResource.Cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator.exe
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch\desktop\komunikator\komunikator\obj\Debug\komunikator.pdb
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\komunikator.exe.config
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\komunikator.exe
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\komunikator.pdb
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\MySql.Data.xml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Konwersacja.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Logowanie.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\MainWindow.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\rejestracja.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Window1.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\WyborRozmowcy.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\App.g.cs
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator_MarkupCompile.cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator_MarkupCompile.lref
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Konwersacja.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Logowanie.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\MainWindow.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\rejestracja.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Window1.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\WyborRozmowcy.baml
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.g.resources
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.Properties.Resources.resources
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.csproj.GenerateResource.Cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.exe
+C:\Users\Admin\Desktop\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.pdb
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\komunikator.exe.config
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.exe
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.pdb
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\komunikator.exe
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\komunikator.pdb
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\bin\Debug\MySql.Data.xml
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.csprojResolveAssemblyReference.cache
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Konwersacja.g.cs
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Logowanie.g.cs
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\MainWindow.g.cs
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\rejestracja.g.cs
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Window1.g.cs
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\WyborRozmowcy.g.cs
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\App.g.cs
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator_MarkupCompile.cache
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator_MarkupCompile.lref
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Konwersacja.baml
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Logowanie.baml
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\MainWindow.baml
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\rejestracja.baml
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\Window1.baml
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\WyborRozmowcy.baml
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.g.resources
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.Properties.Resources.resources
+F:\PWSIP_2018_PZ2_GR2-recover-branch2 (1)\PWSIP_2018_PZ2_GR2-recover-branch2\desktop\komunikator\komunikator\obj\Debug\komunikator.csproj.GenerateResource.Cache
+C:\Users\Andrzej\Desktop\dsadad\desktop\komunikator\komunikator\bin\Debug\komunikator.exe.config
+C:\Users\Andrzej\Desktop\dsadad\desktop\komunikator\komunikator\obj\Debug\komunikator.exe
+C:\Users\Andrzej\Desktop\dsadad\desktop\komunikator\komunikator\obj\Debug\komunikator.pdb
+D:\dsadad\desktop\komunikator\komunikator\bin\Debug\komunikator.exe.config
+D:\dsadad\desktop\komunikator\komunikator\obj\Debug\komunikator.exe
+D:\dsadad\desktop\komunikator\komunikator\obj\Debug\komunikator.pdb

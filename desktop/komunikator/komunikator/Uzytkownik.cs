@@ -11,5 +11,6 @@ namespace komunikator
         public int idUzytkownika { get; set; }
         public string login { get; set; }
         public string status { get; set; }
+        public string zablokowany { get; set; }
     }
 }
