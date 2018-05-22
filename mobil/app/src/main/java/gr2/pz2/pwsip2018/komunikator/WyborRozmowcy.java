@@ -194,4 +194,35 @@ public class WyborRozmowcy extends AppCompatActivity implements AdapterView.OnIt
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
+    public void onClickOdblokuj(View view) {
+        try {
+            if(!Konwersacja.znajdzUzytkownika(szukanyUzytkownik.getText().toString()))
+            {
+                Toast.makeText(getApplicationContext(),"Użytkownik o podanym nicku nie istnieje",Toast.LENGTH_SHORT).show();
+            }else {
+                Konwersacja.odblokujKontakt(zalogowanyUzytkownik, szukanyUzytkownik.getText().toString());
+                Toast.makeText(getApplicationContext(),"Użytkownik został odblokowany!",Toast.LENGTH_SHORT).show();
+            }
+        } catch (SQLException e) {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    public void onClickZablokuj(View view) {
+        try {
+            if(!Konwersacja.znajdzUzytkownika(szukanyUzytkownik.getText().toString()))
+            {
+                Toast.makeText(getApplicationContext(),"Użytkownik o podanym nicku nie istnieje",Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Konwersacja.zablokujKontakt(zalogowanyUzytkownik, szukanyUzytkownik.getText().toString());
+                Toast.makeText(getApplicationContext(),"Użytkownik został zablokowany!",Toast.LENGTH_SHORT).show();
+            }
+        } catch (SQLException e) {
+            Toast.makeText(getApplicationContext(),"Błąd połączenia z serwerem",Toast.LENGTH_SHORT).show();
+            //e.printStackTrace();
+        }
+    }
 }

@@ -13,11 +13,13 @@ public class Konwersacja
 {
     public String login;
     public String adresat;
-    private static final String DANE_BAZY ="jdbc:mysql://192.168.1.12:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
+    private static final String DANE_BAZY ="jdbc:mysql://192.168.43.185:3306/komunikator?useUnicode=yes&characterEncoding=utf-8";//ze względu na brak serwera trzeba za każdym razem zmienić IP na IP komputera z bazą danych
     private static final String UZYTKOWNIK_BAZY ="root";
     private static final String HASLO_BAZY ="";
     private int liczbaWszystkichWiadomosciNaPoczatku;
     private int zaladowaneWiadomosci;
+    public String login1;
+    public String login2;
 
     public Konwersacja(String login, String adresat)
     {
@@ -269,7 +271,41 @@ public class Konwersacja
         przygotujDoPolaczeniaZBaza();
         Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
         Statement st=polaczenie.createStatement();
-        st.executeUpdate("insert into kontakty values(null, " + znajdzIdUzytkownika(login1) + ", " + znajdzIdUzytkownika(login2) + ")");
+        st.executeUpdate("insert into kontakty values(null, " + znajdzIdUzytkownika(login1) + ", " + znajdzIdUzytkownika(login2) + ", 'nie')");
+    }
+
+    public static void zablokujKontakt(String login1, String login2) throws SQLException {
+
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        st.executeUpdate("update kontakty set zablokowany = 'tak' where (idUzytkownika1=" + znajdzIdUzytkownika(login1) + " and idUzytkownika2=" + znajdzIdUzytkownika(login2) + ") or (idUzytkownika1=" + znajdzIdUzytkownika(login2)
+                + " and idUzytkownika2=" + znajdzIdUzytkownika(login1) + ")");
+    }
+
+    public static void odblokujKontakt(String login1, String login2) throws SQLException {
+
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        st.executeUpdate("update kontakty set zablokowany = 'nie' where (idUzytkownika1=" + znajdzIdUzytkownika(login1) + " and idUzytkownika2=" + znajdzIdUzytkownika(login2) + ") or (idUzytkownika1=" + znajdzIdUzytkownika(login2)
+                + " and idUzytkownika2=" + znajdzIdUzytkownika(login1) + ")");
+    }
+
+    public static String czyZablokowany(String login1, String login2) throws SQLException {
+        String zablokowany = null;
+
+        przygotujDoPolaczeniaZBaza();
+        Connection polaczenie=DriverManager.getConnection(DANE_BAZY, UZYTKOWNIK_BAZY, HASLO_BAZY);
+        Statement st=polaczenie.createStatement();
+        ResultSet wynikZapytania=st.executeQuery("select zablokowany from kontakty where (idUzytkownika1=" + znajdzIdUzytkownika(login1) + " and idUzytkownika2=" + znajdzIdUzytkownika(login2)+ ") or (idUzytkownika1=" + znajdzIdUzytkownika(login2)
+                + " and idUzytkownika2=" + znajdzIdUzytkownika(login1) + ")");
+        while (wynikZapytania.next())
+        {
+            zablokowany = wynikZapytania.getString("zablokowany");
+        }
+
+        return zablokowany;
     }
 
     public static Boolean sprawdzCzySaNoweWiadomosci(String login) throws SQLException

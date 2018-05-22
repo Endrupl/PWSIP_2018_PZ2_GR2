@@ -11,11 +11,11 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/szukanyUzytkownik"
-        android:layout_marginEnd="16dp"
-        android:text="Dodaj"
+        android:layout_alignBottom="@+id/szukanyUzytkownik"
+        android:layout_marginStart="32dp"
+        android:layout_toEndOf="@+id/szukanyUzytkownik"
         android:onClick="onClickDodajUzytkownika"
+        android:text="Dodaj"
         tools:layout_editor_absoluteX="278dp"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -49,5 +49,24 @@
         android:layout_alignStart="@+id/szukanyUzytkownik"
         android:layout_marginTop="108dp"
         android:layout_marginBottom="10dp"/>
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/button8"
+        android:layout_alignBottom="@+id/button8"
+        android:layout_toStartOf="@+id/button8"
+        android:onClick="onClickZablokuj"
+        android:text="Zablokuj" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/status"
+        android:onClick="onClickOdblokuj"
+        android:text="Odblokuj" />
 
 </RelativeLayout>

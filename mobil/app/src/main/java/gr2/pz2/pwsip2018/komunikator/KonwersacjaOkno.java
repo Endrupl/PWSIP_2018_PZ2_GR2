@@ -2,6 +2,7 @@ package gr2.pz2.pwsip2018.komunikator;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -59,11 +60,24 @@ public class KonwersacjaOkno extends AppCompatActivity {
     public void onClickWyslij(View v)
     {
         String czasSerwera;
+        String pom = null;
         try
         {
-            czasSerwera=k.wyslijWiadomosc(wiadomoscTekst.getText().toString());
-            wczytaneWiadomosci.add(new Konwersacja.Wiadomosc(wiadomoscTekst.getText().toString(), k.login, czasSerwera));
-            czat.setSelection(adapter.getCount()-1);
+            pom = k.czyZablokowany(k.login, k.adresat);
+            //Toast.makeText(getApplicationContext(),pom,Toast.LENGTH_SHORT).show();
+            if(!"tak".equals(pom)) {
+
+                czasSerwera = k.wyslijWiadomosc(wiadomoscTekst.getText().toString());
+                wczytaneWiadomosci.add(new Konwersacja.Wiadomosc(wiadomoscTekst.getText().toString(), k.login, czasSerwera));
+                czat.setSelection(adapter.getCount() - 1);
+            }else
+            {
+                FloatingActionButton fab = findViewById(R.id.wyslij);
+                fab.setEnabled(false);
+                Toast.makeText(getApplicationContext(),"Nie można wysłać wiadomości. Użytkownik zablokowany",Toast.LENGTH_SHORT).show();
+
+
+            }
         }
         catch(SQLException e)
         {
